@@ -16,3 +16,4 @@ The client program presents a command line interface that allows a user to:
 ### Quit 
 - Terminate the connection to the server.
 
+The server program binds to a port and listens for requests from a client. After a client connects to the server, the server waits for commands. When the client sends a terminate message (quit), the server terminates the connection and waits for the next connection.
