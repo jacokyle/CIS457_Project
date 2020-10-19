@@ -40,7 +40,7 @@ while programState == 1:
         if option <= 0 or option >= 6:
             print("Please choose a number between 1 through 5.")
 
-        # If the integer is 1, connect to a server.
+        # If option 1 is selected, connect to a server.
         if option == 1:
             print("Connecting to server...\n")
 
@@ -52,7 +52,7 @@ while programState == 1:
 
             print('Received', repr(data))
 
-        # If the integer is 2, list files stored at the server.
+        # If option 2 is selected, list files stored at the server.
         if option == 2:
             print("Listing contents of current directory...\n")
 
@@ -64,7 +64,7 @@ while programState == 1:
 
             print('Received', repr(data))
 
-        # If the integer is 3, download (retrieve) a file from the server.
+        # If option 3 is selected, download (retrieve) a file from the server.
         if option == 3:
             print("Retrieving file from the server...\n")
 
@@ -76,7 +76,7 @@ while programState == 1:
 
             print('Received', repr(data))
 
-        # If the integer is 4, upload (store) a file from the client to the server.
+        # If option 4 is selected, upload (store) a file from the client to the server.
         if option == 4:
             print("Sending file to the server...\n")
 
@@ -88,7 +88,7 @@ while programState == 1:
 
             print('Received', repr(data))
 
-        # If the integer is 5, terminate the connection to the server.
+        # If option 5 is selected, terminate the connection to the server.
         if option == 5:
             programState = 0
 
