@@ -7,6 +7,7 @@
 
 import socket
 
+# programState of 1 means the program is active.
 programState = 1
 
 HOST = '127.0.0.1'  # The server's hostname or IP address
@@ -15,21 +16,21 @@ PORT = 4000  # The port used by the server
 # Displays the client options for the user.
 print("\nChoose an option for the client:\n")
 print("1 - (Connect)    Connect to the server.")
-print("2 - (List)       List contents of the current directory.")
+print("2 - (List)       List files stored at the server.")
 print("3 - (Retrieve)   Retrieve a file from the server.")
-print("4 - (Store)      Send a file to server.")
-print("5 - (Quit)       Terminate the control connection.\n")
+print("4 - (Store)      Store a file from the client to the server.")
+print("5 - (Quit)       Terminate the connection with the server.\n")
 
 while programState == 1:
     # Displays a prompt for the user to input their choice.
     option = input("Enter a number: ")
 
-    # Checks if the option the user provided is not a number or too long.
-    if option.isalpha() or len(option) >= 2:
-        print("\nThe input you provided was not an option. Try again.\n")
+    # If the input is not a number or too long, warn the user.
+    if option.isalpha() or option.isascii() or len(option) >= 2:
+        print("\nPlease choose a number between 1 through 5.\n")
 
     # If the input is a number, convert it to type integer.
-    if option.isdigit():
+    if option.isdigit() and len(option) == 1:
         option = int(option)
 
     # If the input is an integer, continue to the next step.
@@ -37,11 +38,11 @@ while programState == 1:
 
         # If the integer is not an available choice, warn the user.
         if option <= 0 or option >= 6:
-            print("\nThe number you provided is not a choice. Try again.\n")
+            print("\nThe input you provided is not an option. Try again.\n")
 
-        # If the integer is 1, connect to the server.
+        # If the integer is 1, connect to a server.
         if option == 1:
-            print("\nConnecting to server.\n")
+            print("Connecting to server...\n")
 
             with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                 s.connect((HOST, PORT))
@@ -51,9 +52,9 @@ while programState == 1:
 
             print('Received', repr(data))
 
-        # If the integer is 2, list the contents of the directory.
+        # If the integer is 2, list files stored at the server.
         if option == 2:
-            print("\nListing contents of current directory.\n")
+            print("Listing contents of current directory...\n")
 
             with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                 s.connect((HOST, PORT))
@@ -63,9 +64,9 @@ while programState == 1:
 
             print('Received', repr(data))
 
-        # If the integer is 3, retrieve a file from the server.
+        # If the integer is 3, download (retrieve) a file from the server.
         if option == 3:
-            print("\nRetrieving file from the server.\n")
+            print("Retrieving file from the server...\n")
 
             with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                 s.connect((HOST, PORT))
@@ -75,9 +76,9 @@ while programState == 1:
 
             print('Received', repr(data))
 
-        # If the integer is 4, send a file to the server.
+        # If the integer is 4, upload (store) a file from the client to the server.
         if option == 4:
-            print("\nSending file to the server.\n")
+            print("Sending file to the server...\n")
 
             with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                 s.connect((HOST, PORT))
@@ -87,20 +88,21 @@ while programState == 1:
 
             print('Received', repr(data))
 
-        # If the integer is 5, terminate the client and server.
+        # If the integer is 5, terminate the connection to the server.
         if option == 5:
-            print("\nTerminating client and server programs.\n")
-
             programState = 0
+
+            print("Terminating client and server programs...\n")
 
             with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                 s.connect((HOST, PORT))
                 s.sendall(b'You have terminated the client and server!')
 
-                data = s.recv(1024)
+                data = s.recv(0)
                 s.close()
 
             print('Received', repr(data))
 
+# programState of 0 means the program will shutdown.
 if programState == 0:
     exit()
