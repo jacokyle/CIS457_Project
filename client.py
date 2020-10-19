@@ -19,15 +19,15 @@ print("1 - (Connect)    Connect to the server.")
 print("2 - (List)       List files stored at the server.")
 print("3 - (Retrieve)   Retrieve a file from the server.")
 print("4 - (Store)      Store a file from the client to the server.")
-print("5 - (Quit)       Terminate the connection with the server.\n")
+print("5 - (Quit)       Terminate the connection with the server.")
 
 while programState == 1:
     # Displays a prompt for the user to input their choice.
-    option = input("Enter a number: ")
+    option = input("\nEnter a number: ")
 
     # If the input is not a number or too long, warn the user.
-    if option.isalpha() or option.isascii() or len(option) >= 2:
-        print("\nPlease choose a number between 1 through 5.\n")
+    if not option.isdigit() or len(option) >= 2:
+        print("Please choose a number between 1 through 5.")
 
     # If the input is a number, convert it to type integer.
     if option.isdigit() and len(option) == 1:
@@ -38,7 +38,7 @@ while programState == 1:
 
         # If the integer is not an available choice, warn the user.
         if option <= 0 or option >= 6:
-            print("\nThe input you provided is not an option. Try again.\n")
+            print("Please choose a number between 1 through 5.")
 
         # If the integer is 1, connect to a server.
         if option == 1:
