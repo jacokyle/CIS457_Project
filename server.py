@@ -10,12 +10,12 @@ import socket, os, math
 HOST = '127.0.0.1'  # Standard loopback interface address (localhost)
 PORT = 4000  # Port to listen on (non-privileged ports are > 1023)
 
-def listFiles(conn):
+def listFiles(connection):
     directory = os.getcwd()
     fileList = os.listdir(directory)
-    message = "Current Directory:\n"
-    message += "\n".join(fileList)
-    conn.sendall(message)
+    message = 'Current Directory:\n'
+    message += '\n'.join(fileList)
+    connection.sendall(message.encode())
 
 with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
     s.bind((HOST, PORT))
@@ -24,9 +24,8 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
     with conn:
         print('Connected by', addr)
         while True:
-            data = conn.recv(1024)
+            data = conn.recv(1024).decode()
             if not data:
                 break
-            if data == 2:
+            if data == '2':
                 listFiles(conn)
-            conn.sendall(data)
