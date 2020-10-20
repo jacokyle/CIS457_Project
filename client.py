@@ -25,7 +25,7 @@ def displayMenu():
     print("3 - (Retrieve)   Retrieve a file from the server.")
     print("4 - (Store)      Store a file from the client to the server.")
     print("5 - (Quit)       Terminate the connection with the server.")
-    print("6 - (Close)      Close the FTP Server program")
+    print("6 - (Close)      Close the FTP Server program.")
 
 
 # Display the options during startup.
@@ -37,7 +37,7 @@ while programState == 1:
 
     # If the input is not a number or too long, warn the user.
     if not option.isdigit() or len(option) >= 2:
-        print("Please choose a number between 1 through 5.")
+        print("Please choose a number between 1 through 6.")
 
     # If the input is a number, convert it to type integer.
     if option.isdigit() and len(option) == 1:
@@ -129,7 +129,7 @@ while programState == 1:
                         programState = 1
                 else:
                     if closeConfirm == 'Y':
-                        print('\nPlease use option 5 to disconnect from server first.')
+                        print('\nIMPORTANT: Please use option 5 to disconnect from server first.')
                         displayMenu()
 
                         programState = 1

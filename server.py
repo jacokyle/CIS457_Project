@@ -20,6 +20,16 @@ def listFiles(connection):
     connection.sendall(message.encode())
 
 
+def retrieveFile():
+    print("Needs work.")
+    # Needs work.
+
+
+def sendFile():
+    print("Needs work.")
+    # Needs work.
+
+
 with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
     s.bind((HOST, PORT))
     s.listen()
