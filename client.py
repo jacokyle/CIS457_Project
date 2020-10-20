@@ -25,12 +25,13 @@ def displayMenu():
     print("3 - (Retrieve)   Retrieve a file from the server.")
     print("4 - (Store)      Store a file from the client to the server.")
     print("5 - (Quit)       Terminate the connection with the server.")
-    print("6 - (Close)      Close the FTP Server program.")
+    print("6 - (Close)      Close the client program.")
 
 
-# Display the options during startup.
+# Display the options menu during startup.
 displayMenu()
 
+# While the programState is active, perform basic actions.
 while programState == 1:
     # Displays a prompt for the user to input their choice.
     option = input("\nEnter a number: ")
@@ -52,9 +53,12 @@ while programState == 1:
 
         # If option 1 is selected, connect to a server.
         if option == 1:
+
+            # Notify the user that they are already connected to the server.
             if isConnected:
                 print("You are already connected to the server.")
 
+            # Connect the client to the server.
             if not isConnected:
                 print("Connecting to server...")
                 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -63,8 +67,12 @@ while programState == 1:
 
         # If option 2 is selected, list files stored at the server.
         if option == 2:
+
+            # Notify the user that they need to connect to server first.
             if not isConnected:
                 print("Please connect to the server.")
+
+            # List all files in the server directory.
             else:
                 print("Listing contents of current directory...\n")
                 s.sendall('2'.encode())
@@ -75,8 +83,12 @@ while programState == 1:
 
         # If option 3 is selected, download (retrieve) a file from the server.
         if option == 3:
+
+            # Notify the user that they need to connect to server first.
             if not isConnected:
                 print("Please connect to the server.")
+
+            # Retrieve a specified file from the server for the client.
             else:
                 print("\nWhat file would you like to retrieve?\n")
                 s.sendall('3'.encode())
@@ -87,8 +99,12 @@ while programState == 1:
 
         # If option 4 is selected, upload (store) a file from the client to the server.
         if option == 4:
+
+            # Notify the user that they need to connect to server first.
             if not isConnected:
                 print("Please connect to the server.")
+
+            # Send a specified file from the client to the server.
             else:
                 print("Sending file to the server...\n")
                 s.sendall('4'.encode())
@@ -97,46 +113,75 @@ while programState == 1:
 
                 print('Received', repr(data))
 
-        # If option 5 is selected, terminate the connection to the server.
+        # If option 5 is selected, terminate (quit) the connection to the server.
         if option == 5:
+
+            # Notify the user that they need to connect to server first.
             if not isConnected:
                 print("Please connect to the server.")
+
+            # Terminate the connection between the client and server.
             else:
                 isConnected = False
 
-                print("Terminating client and server connection...\n")
+                print("Terminating client and server connection...")
                 s.sendall('5'.encode())
 
                 data = s.recv(0).decode()
                 s.close()
 
-                print('Received', repr(data))
-
+        # If option 6 is selected, a close interface will be displayed for the client.
         if option == 6:
+            # programState of 2 means the program is in the close menu.
             programState = 2
 
+            # While the programState is in the close menu, ask the user to confirm.
             if programState == 2:
-                print('Would you like to close the FTP Server program?')
+                # Confirm with the user that they would like to close the program.
+                print('Would you like to close the client program?')
                 closeConfirm = input("\nEnter Y or N: ")
 
+                # Conducts close operations when server connection does not exist.
                 if not isConnected:
-                    if closeConfirm == 'Y':
-                        print("Closing the FTP Server program...")
 
+                    # If the user says yes, close the entire program.
+                    if closeConfirm == 'Y':
+                        # Notify to the user the program is closing.
+                        print("Closing the client program...")
+
+                        # Set the program to close.
                         programState = 0
+
+                    # If the user says no, redisplay the options menu and set back to active.
                     if closeConfirm == 'N':
+                        # Redisplay the options menu.
                         displayMenu()
+
+                        # Set the program back to active.
                         programState = 1
+
+                # Conducts close operations when server connection does exist.
                 else:
+
+                    # If the user says yes, warn the user to end the connection with server first.
                     if closeConfirm == 'Y':
+                        # Warn the user that the that need to disconnect from the server before closing.
                         print('\nIMPORTANT: Please use option 5 to disconnect from server first.')
+
+                        # Redisplay the options menu.
                         displayMenu()
 
+                        # Set the program back to active.
                         programState = 1
+
+                    # If the user says no, redisplay the options menu and set back to active.
                     if closeConfirm == 'N':
+                        # Redisplay the options menu.
                         displayMenu()
+
+                        # Set the program back to active.
                         programState = 1
 
-# programState of 0 means the program will shutdown.
+# While the programState is set to close, exit the program.
 if programState == 0:
     exit()
