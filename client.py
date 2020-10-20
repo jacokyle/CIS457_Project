@@ -34,7 +34,7 @@ displayMenu()
 # While the programState is active, perform basic actions.
 while programState == 1:
     # Displays a prompt for the user to input their choice.
-    option = input("\nEnter a number: ")
+    option = input("\nEnter a number: ").strip()
 
     # If the input is not a number or too long, warn the user.
     if not option.isdigit() or len(option) >= 2:
@@ -60,7 +60,7 @@ while programState == 1:
 
             # Connect the client to the server.
             if not isConnected:
-                print("Connecting to server...")
+                print("Connected to server.")
                 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
                 s.connect((HOST, PORT))
                 isConnected = True
@@ -90,7 +90,7 @@ while programState == 1:
 
             # Retrieve a specified file from the server for the client.
             else:
-                print("\nWhat file would you like to retrieve?\n")
+                print("What file would you like to retrieve?\n")
                 s.sendall('3'.encode())
 
                 data = s.recv(1024).decode()
@@ -136,51 +136,55 @@ while programState == 1:
             programState = 2
 
             # While the programState is in the close menu, ask the user to confirm.
-            if programState == 2:
+            while programState == 2:
                 # Confirm with the user that they would like to close the program.
                 print('Would you like to close the client program?')
-                closeConfirm = input("\nEnter Y or N: ").upper()
+                closeConfirm = input("\nEnter Y or N: ").upper().strip()
 
-                # Conducts close operations when server connection does not exist.
-                if not isConnected:
+                if closeConfirm == 'Y' or closeConfirm == 'N':
+                    # Conducts close operations when server connection does not exist.
+                    if not isConnected:
 
-                    # If the user says yes, close the entire program.
-                    if closeConfirm == 'Y':
-                        # Notify to the user the program is closing.
-                        print("Closing the client program...")
+                        # If the user says yes, close the entire program.
+                        if closeConfirm == 'Y':
+                            # Notify to the user the program is closing.
+                            print("Closing the client program...")
 
-                        # Set the program to close.
-                        programState = 0
+                            # Set the program to close.
+                            programState = 0
 
-                    # If the user says no, redisplay the options menu and set back to active.
-                    if closeConfirm == 'N':
-                        # Redisplay the options menu.
-                        displayMenu()
+                        # If the user says no, redisplay the options menu and set back to active.
+                        if closeConfirm == 'N':
+                            # Redisplay the options menu.
+                            displayMenu()
 
-                        # Set the program back to active.
-                        programState = 1
+                            # Set the program back to active.
+                            programState = 1
 
-                # Conducts close operations when server connection does exist.
+                    # Conducts close operations when server connection does exist.
+                    else:
+
+                        # If the user says yes, warn the user to end the connection with server first.
+                        if closeConfirm == 'Y':
+                            # Warn the user that the that need to disconnect from the server before closing.
+                            print('\nIMPORTANT: Please use option 5 to disconnect from server first.')
+
+                            # Redisplay the options menu.
+                            displayMenu()
+
+                            # Set the program back to active.
+                            programState = 1
+
+                        # If the user says no, redisplay the options menu and set back to active.
+                        if closeConfirm == 'N':
+                            # Redisplay the options menu.
+                            displayMenu()
+
+                            # Set the program back to active.
+                            programState = 1
+
                 else:
-
-                    # If the user says yes, warn the user to end the connection with server first.
-                    if closeConfirm == 'Y':
-                        # Warn the user that the that need to disconnect from the server before closing.
-                        print('\nIMPORTANT: Please use option 5 to disconnect from server first.')
-
-                        # Redisplay the options menu.
-                        displayMenu()
-
-                        # Set the program back to active.
-                        programState = 1
-
-                    # If the user says no, redisplay the options menu and set back to active.
-                    if closeConfirm == 'N':
-                        # Redisplay the options menu.
-                        displayMenu()
-
-                        # Set the program back to active.
-                        programState = 1
+                    print("\nIMPORTANT: Please choose Y or N.")
 
 # While the programState is set to close, exit the program.
 if programState == 0:
