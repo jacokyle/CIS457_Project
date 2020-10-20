@@ -8,6 +8,8 @@
 import os
 import socket
 
+programState = 1
+
 HOST = '127.0.0.1'  # Standard loopback interface address (localhost)
 PORT = 4000  # Port to listen on (non-privileged ports are > 1023)
 
@@ -31,33 +33,36 @@ def sendFile():
     # Needs work.
 
 
-# Builds the connection with the client and responds to selected options.
-with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-    s.bind((HOST, PORT))
-    s.listen()
-    conn, addr = s.accept()
-    with conn:
-        print('Connected by', addr)
-        while True:
-            data = conn.recv(1024).decode()
+while programState == 1:
+    # Builds the connection with the client and responds to selected options.
+    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+        s.bind((HOST, PORT))
+        s.listen()
+        conn, addr = s.accept()
+        with conn:
+            print('Connected by', addr)
+            while True:
+                data = conn.recv(1024).decode()
 
-            # When the client does not send any data, break from the client.
-            if not data:
-                break
+                if data == '1':
+                    break
 
-            # When client chooses to list files, list the files in the current directory.
-            if data == '2':
-                listFiles(conn)
+                # When client chooses to list files, list the files in the current directory.
+                if data == '2':
+                    listFiles(conn)
 
-            # When client chooses to retrieve a file, send the file to the client.
-            if data == '3':
-                continue  # This needs a function for retrieving files.
+                # When client chooses to retrieve a file, send the file to the client.
+                if data == '3':
+                    continue  # This needs a function for retrieving files.
 
-            # When client chooses to send a file, accept the file from the client.
-            if data == '4':
-                continue  # This needs a function for sending files.
+                # When client chooses to send a file, accept the file from the client.
+                if data == '4':
+                    continue  # This needs a function for sending files.
 
-            # When client chooses to quit the connection, close the server.
-            if data == '5':
-                conn.close()
-                exit()
+                # When client chooses to quit the connection, close the server.
+                if data == '5':
+                    programState = 0
+
+# Close the server when client quits the connection.
+if programState == 0:
+    exit()

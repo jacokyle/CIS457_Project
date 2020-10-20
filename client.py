@@ -60,7 +60,7 @@ while programState == 1:
 
             # Connect the client to the server.
             if not isConnected:
-                print("Connected to server.")
+                print("Connecting to the server...")
                 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
                 s.connect((HOST, PORT))
                 isConnected = True
@@ -141,7 +141,9 @@ while programState == 1:
                 print('Would you like to close the client program?')
                 closeConfirm = input("\nEnter Y or N: ").upper().strip()
 
+                # Checks if the input is Y or N, which continues closing function.
                 if closeConfirm == 'Y' or closeConfirm == 'N':
+
                     # Conducts close operations when server connection does not exist.
                     if not isConnected:
 
@@ -183,6 +185,7 @@ while programState == 1:
                             # Set the program back to active.
                             programState = 1
 
+                # Checks if the input is not Y or N, otherwise warn the user.
                 else:
                     print("\nIMPORTANT: Please choose Y or N.")
 
