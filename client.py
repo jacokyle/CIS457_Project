@@ -45,11 +45,14 @@ while programState == 1:
 
         # If option 1 is selected, connect to a server.
         if option == 1:
-            print("Connecting to server...\n")
+            if isConnected:
+                print("You are already connected to the server.")
 
-            s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            s.connect((HOST, PORT))
-            isConnected = True
+            if not isConnected:
+                print("Connecting to server...")
+                s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+                s.connect((HOST, PORT))
+                isConnected = True
 
         # If option 2 is selected, list files stored at the server.
         if option == 2:
