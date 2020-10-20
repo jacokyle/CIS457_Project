@@ -9,10 +9,12 @@ import socket
 
 # programState of 1 means the program is active.
 programState = 1
+
+# isConnected defines if the client is connected to the server.
 isConnected = False
 
-HOST = '127.0.0.1'  # The server's hostname or IP address
-PORT = 4000  # The port used by the server
+HOST = '127.0.0.1'  # The server's hostname or IP address.
+PORT = 4000  # The port used by the server.
 
 # Displays the client options for the user.
 print("\nChoose an option for the client:\n")
@@ -52,7 +54,7 @@ while programState == 1:
         # If option 2 is selected, list files stored at the server.
         if option == 2:
             if not isConnected:
-                print("Please connect to the server");
+                print("Please connect to the server.");
             else:
                 print("Listing contents of current directory...\n")
                 s.sendall('2'.encode())
@@ -64,7 +66,7 @@ while programState == 1:
         # If option 3 is selected, download (retrieve) a file from the server.
         if option == 3:
             if not isConnected:
-                print("Please connect to the server");
+                print("Please connect to the server.");
             else:
                 print("Retrieving file from the server...\n")
                 s.sendall('3'.encode())
@@ -76,10 +78,9 @@ while programState == 1:
         # If option 4 is selected, upload (store) a file from the client to the server.
         if option == 4:
             if not isConnected:
-                print("Please connect to the server");
+                print("Please connect to the server.");
             else:
                 print("Sending file to the server...\n")
-
                 s.sendall('4'.encode())
 
                 data = s.recv(1024).decode()
