@@ -39,3 +39,6 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
             if data == '5':
                 conn.close()
                 exit()
+            if data == '6':
+                conn.close()
+                exit()
