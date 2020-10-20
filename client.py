@@ -9,6 +9,7 @@ import socket
 
 # programState of 1 means the program is active.
 programState = 1
+isConnected = False
 
 HOST = '127.0.0.1'  # The server's hostname or IP address
 PORT = 4000  # The port used by the server
@@ -44,62 +45,56 @@ while programState == 1:
         if option == 1:
             print("Connecting to server...\n")
 
-            with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-                s.connect((HOST, PORT))
-                s.sendall(b'You have connected to the server!')
-
-                data = s.recv(1024)
-
-            print('Received', repr(data))
+            s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            s.connect((HOST, PORT))
+            isConnected = True
 
         # If option 2 is selected, list files stored at the server.
         if option == 2:
-            print("Listing contents of current directory...\n")
+            if not isConnected:
+                print("Please connect to the server");
+            else:
+                print("Listing contents of current directory...\n")
+                s.sendall('2'.encode())
 
-            with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-                s.connect((HOST, PORT))
-                s.sendall(b'You have displayed the contents of the current directory!')
+                data = s.recv(1024).decode()
 
-                data = s.recv(1024)
-
-            print('Received', repr(data))
+                print(data)
 
         # If option 3 is selected, download (retrieve) a file from the server.
         if option == 3:
-            print("Retrieving file from the server...\n")
+            if not isConnected:
+                print("Please connect to the server");
+            else:
+                print("Retrieving file from the server...\n")
+                s.sendall('3'.encode())
 
-            with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-                s.connect((HOST, PORT))
-                s.sendall(b'You have received a file from the server!')
+                data = s.recv(1024).decode()
 
-                data = s.recv(1024)
-
-            print('Received', repr(data))
+                print(data)
 
         # If option 4 is selected, upload (store) a file from the client to the server.
         if option == 4:
-            print("Sending file to the server...\n")
+            if not isConnected:
+                print("Please connect to the server");
+            else:
+                print("Sending file to the server...\n")
 
-            with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-                s.connect((HOST, PORT))
-                s.sendall(b'You have sent a file to the server!')
+                s.sendall('4'.encode())
 
-                data = s.recv(1024)
+                data = s.recv(1024).decode()
 
-            print('Received', repr(data))
+                print('Received', repr(data))
 
         # If option 5 is selected, terminate the connection to the server.
         if option == 5:
             programState = 0
 
             print("Terminating client and server programs...\n")
+            s.sendall('5'.encode())
 
-            with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-                s.connect((HOST, PORT))
-                s.sendall(b'You have terminated the client and server!')
-
-                data = s.recv(0)
-                s.close()
+            data = s.recv(0).decode()
+            s.close()
 
             print('Received', repr(data))
 
