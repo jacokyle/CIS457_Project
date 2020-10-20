@@ -47,7 +47,6 @@ while programState == 1:
             with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                 s.connect((HOST, PORT))
                 s.sendall(b'You have connected to the server!')
-
                 data = s.recv(1024)
 
             print('Received', repr(data))
@@ -59,7 +58,6 @@ while programState == 1:
             with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                 s.connect((HOST, PORT))
                 s.sendall(b'You have displayed the contents of the current directory!')
-
                 data = s.recv(1024)
 
             print('Received', repr(data))
@@ -71,7 +69,6 @@ while programState == 1:
             with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                 s.connect((HOST, PORT))
                 s.sendall(b'You have received a file from the server!')
-
                 data = s.recv(1024)
 
             print('Received', repr(data))
@@ -83,7 +80,6 @@ while programState == 1:
             with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                 s.connect((HOST, PORT))
                 s.sendall(b'You have sent a file to the server!')
-
                 data = s.recv(1024)
 
             print('Received', repr(data))
@@ -97,8 +93,7 @@ while programState == 1:
             with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                 s.connect((HOST, PORT))
                 s.sendall(b'You have terminated the client and server!')
-
-                data = s.recv(0)
+                data = s.recv(1024)
                 s.close()
 
             print('Received', repr(data))
