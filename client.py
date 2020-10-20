@@ -57,7 +57,7 @@ while programState == 1:
         # If option 2 is selected, list files stored at the server.
         if option == 2:
             if not isConnected:
-                print("Please connect to the server.");
+                print("Please connect to the server.")
             else:
                 print("Listing contents of current directory...\n")
                 s.sendall('2'.encode())
@@ -69,9 +69,9 @@ while programState == 1:
         # If option 3 is selected, download (retrieve) a file from the server.
         if option == 3:
             if not isConnected:
-                print("Please connect to the server.");
+                print("Please connect to the server.")
             else:
-                print("Retrieving file from the server...\n")
+                print("\nWhat file would you like to retrieve?\n")
                 s.sendall('3'.encode())
 
                 data = s.recv(1024).decode()
@@ -81,7 +81,7 @@ while programState == 1:
         # If option 4 is selected, upload (store) a file from the client to the server.
         if option == 4:
             if not isConnected:
-                print("Please connect to the server.");
+                print("Please connect to the server.")
             else:
                 print("Sending file to the server...\n")
                 s.sendall('4'.encode())
@@ -92,15 +92,18 @@ while programState == 1:
 
         # If option 5 is selected, terminate the connection to the server.
         if option == 5:
-            programState = 0
+            if not isConnected:
+                print("Please connect to the server.")
+            else:
+                programState = 0
 
-            print("Terminating client and server programs...\n")
-            s.sendall('5'.encode())
+                print("Terminating client and server programs...\n")
+                s.sendall('5'.encode())
 
-            data = s.recv(0).decode()
-            s.close()
+                data = s.recv(0).decode()
+                s.close()
 
-            print('Received', repr(data))
+                print('Received', repr(data))
 
 # programState of 0 means the program will shutdown.
 if programState == 0:

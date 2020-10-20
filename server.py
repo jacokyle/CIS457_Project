@@ -5,10 +5,12 @@
 
 # The server program binds to a port and listens to requests from a client.
 
-import socket, os, math
+import os
+import socket
 
 HOST = '127.0.0.1'  # Standard loopback interface address (localhost)
 PORT = 4000  # Port to listen on (non-privileged ports are > 1023)
+
 
 def listFiles(connection):
     directory = os.getcwd()
@@ -16,6 +18,7 @@ def listFiles(connection):
     message = 'Current Directory:\n'
     message += '\n'.join(fileList)
     connection.sendall(message.encode())
+
 
 with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
     s.bind((HOST, PORT))
@@ -29,3 +32,10 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                 break
             if data == '2':
                 listFiles(conn)
+            if data == '3':
+                continue  # This needs a function for retrieving files.
+            if data == '4':
+                continue  # This needs a function for sending files.
+            if data == '5':
+                conn.close()
+                exit()
