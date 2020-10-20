@@ -139,7 +139,7 @@ while programState == 1:
             if programState == 2:
                 # Confirm with the user that they would like to close the program.
                 print('Would you like to close the client program?')
-                closeConfirm = input("\nEnter Y or N: ")
+                closeConfirm = input("\nEnter Y or N: ").upper()
 
                 # Conducts close operations when server connection does not exist.
                 if not isConnected:
