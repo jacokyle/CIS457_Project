@@ -92,27 +92,53 @@ while programState == "normal":
 
         # If option 3 is selected, download (retrieve) a file from the server.
         if option == 3:
+            programState = "retrieveFile"
 
-            # Retrieve a specified file from the server for the client.
-            if isConnected:
-                print("What file would you like to retrieve?\n")
-                s.sendall('3'.encode())
+            # Enter the retrieveFile state.
+            while programState == "retrieveFile":
+                print("What file would you like to retrieve?")
 
-                data = s.recv(1024).decode()
+                retrieveFileInput = input("\nEnter a file to retrieve from the server: ").strip()
 
-                print(data)
+                # Retrieve a specified file from the server for the client.
+                if isConnected:
+                    s.sendall('2'.encode())
+                    s.sendall('3'.encode())
+
+                    data = s.recv(1024).decode()
+
+                    # Notifies the user when a file has been retrieved.
+                    if data.__contains__(retrieveFileInput):
+                        print("You have retrieved the file: ", retrieveFileInput)
+
+                        programState = "normal"
+                    else:
+                        print("IMPORTANT: The file does not exist in the directory.\n")
 
         # If option 4 is selected, upload (store) a file from the client to the server.
         if option == 4:
+            programState = "sendFile"
 
-            # Send a specified file from the client to the server.
-            if isConnected:
-                print("Sending file to the server...\n")
-                s.sendall('4'.encode())
+            # Enter the sendFile state.
+            while programState == "sendFile":
+                print("What file would you like to send?")
 
-                data = s.recv(1024).decode()
+                sendFileInput = input("\nEnter a filename to send to the server: ").strip()
 
-                print('Received', repr(data))
+                # Send a specified file to the server from the client.
+                if isConnected:
+                    s.sendall('2'.encode())
+                    s.sendall('3'.encode())
+
+                    data = s.recv(1024).decode()
+
+                    # Notifies the user when a file has been sent.
+                    if data.__contains__(sendFileInput):
+                        print("You have sent the file: ", sendFileInput)
+
+                        programState = "normal"
+                    else:
+                        print("IMPORTANT: The file does not exist in the directory.\n")
 
         # If option 5 is selected, terminate (quit) the connection to the server.
         if option == 5:
