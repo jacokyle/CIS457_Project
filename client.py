@@ -27,7 +27,7 @@ def displayMenuClient():
 
 # Function for displaying the option menu for the server.
 def displayMenuServer():
-    print("\nChoose an option for the server:\n")
+    print("\nChoose an option for the client and server:\n")
 
     print("2 - (List)       List files stored at the server.")
     print("3 - (Retrieve)   Retrieve a file from the server.")
