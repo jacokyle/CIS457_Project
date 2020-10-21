@@ -17,19 +17,27 @@ HOST = '127.0.0.1'  # The server's hostname or IP address.
 PORT = 4000  # The port used by the server.
 
 
-# Function for displaying the option menu when appropriate.
-def displayMenu():
+# Function for displaying the option menu for the client.
+def displayMenuClient():
     print("\nChoose an option for the client:\n")
+
     print("1 - (Connect)    Connect to the server.")
+    print("6 - (Close)      Close the client program.")
+
+
+# Function for displaying the option menu for the server.
+def displayMenuServer():
+    print("\nChoose an option for the server:\n")
+
     print("2 - (List)       List files stored at the server.")
     print("3 - (Retrieve)   Retrieve a file from the server.")
     print("4 - (Store)      Store a file from the client to the server.")
     print("5 - (Quit)       Terminate the connection with the server.")
-    print("6 - (Close)      Close the FTP Server program.")
+    print("6 - (Close)      Close the client and server program.")
 
 
 # Display the options menu during startup.
-displayMenu()
+displayMenuClient()
 
 # While the programState is active, perform basic actions.
 while programState == 1:
@@ -38,7 +46,10 @@ while programState == 1:
 
     # If the input is not a number or too long, warn the user.
     if not option.isdigit() or len(option) >= 2:
-        print("Please choose a number between 1 through 6.")
+        if isConnected:
+            print("Please choose a number between 2 through 6.")
+        else:
+            print("Please choose 1 or 6.")
 
     # If the input is a number, convert it to type integer.
     if option.isdigit() and len(option) == 1:
@@ -47,16 +58,16 @@ while programState == 1:
     # If the input is an integer, continue to the next step.
     if isinstance(option, int):
 
-        # If the integer is not an available choice, warn the user.
-        if option <= 0 or option >= 7:
-            print("Please choose a number between 1 through 6.")
+        # Warn the user what options are available based on which menu is displayed..
+        if isConnected:
+            if option <= 1 or option >= 7:
+                print("Please choose a number between 2 through 6.")
+        else:
+            if option != 1 and option != 6:
+                print("Please choose 1 or 6.")
 
         # If option 1 is selected, connect to a server.
         if option == 1:
-
-            # Notify the user that they are already connected to the server.
-            if isConnected:
-                print("You are already connected to the server.")
 
             # Connect the client to the server.
             if not isConnected:
@@ -65,15 +76,13 @@ while programState == 1:
                 s.connect((HOST, PORT))
                 isConnected = True
 
+                displayMenuServer()
+
         # If option 2 is selected, list files stored at the server.
         if option == 2:
 
-            # Notify the user that they need to connect to server first.
-            if not isConnected:
-                print("Please connect to the server.")
-
             # List all files in the server directory.
-            else:
+            if isConnected:
                 print("Listing contents of current directory...\n")
                 s.sendall('2'.encode())
 
@@ -84,12 +93,8 @@ while programState == 1:
         # If option 3 is selected, download (retrieve) a file from the server.
         if option == 3:
 
-            # Notify the user that they need to connect to server first.
-            if not isConnected:
-                print("Please connect to the server.")
-
             # Retrieve a specified file from the server for the client.
-            else:
+            if isConnected:
                 print("What file would you like to retrieve?\n")
                 s.sendall('3'.encode())
 
@@ -100,12 +105,8 @@ while programState == 1:
         # If option 4 is selected, upload (store) a file from the client to the server.
         if option == 4:
 
-            # Notify the user that they need to connect to server first.
-            if not isConnected:
-                print("Please connect to the server.")
-
             # Send a specified file from the client to the server.
-            else:
+            if isConnected:
                 print("Sending file to the server...\n")
                 s.sendall('4'.encode())
 
@@ -116,12 +117,8 @@ while programState == 1:
         # If option 5 is selected, terminate (quit) the connection to the server.
         if option == 5:
 
-            # Notify the user that they need to connect to server first.
-            if not isConnected:
-                print("Please connect to the server.")
-
             # Terminate the connection between the client and server.
-            else:
+            if isConnected:
                 # Label the client disconnected from server.
                 isConnected = False
 
@@ -131,6 +128,8 @@ while programState == 1:
                 data = s.recv(0).decode()
                 s.close()
 
+                displayMenuClient()
+
         # If option 6 is selected, a close interface will be displayed for the client.
         if option == 6:
             # programState of 2 means the program is in the close menu.
@@ -138,8 +137,13 @@ while programState == 1:
 
             # While the programState is in the close menu, ask the user to confirm.
             while programState == 2:
+
                 # Confirm with the user that they would like to close the program.
-                print('Would you like to close the FTP Server program?')
+                if not isConnected:
+                    print('Would you like to close the client program?')
+                else:
+                    print('Would you like to close the client and server program?')
+
                 closeConfirm = input("\nEnter Y or N: ").upper().strip()
 
                 # Checks if the input is Y or N, which continues closing function.
@@ -151,7 +155,7 @@ while programState == 1:
                         # If the user says yes, close the entire program.
                         if closeConfirm == 'Y':
                             # Notify to the user the program is closing.
-                            print("Closing the FTP Server program...")
+                            print("Closing the client program...")
 
                             # Set the program to close.
                             programState = 0
@@ -159,7 +163,7 @@ while programState == 1:
                         # If the user says no, redisplay the options menu and set back to active.
                         if closeConfirm == 'N':
                             # Redisplay the options menu.
-                            displayMenu()
+                            displayMenuClient()
 
                             # Set the program back to active.
                             programState = 1
@@ -173,7 +177,7 @@ while programState == 1:
                             isConnected = False
 
                             # Notify to the user the program is closing.
-                            print("Closing FTP Server program...")
+                            print("Closing client and server programs...")
                             s.sendall('6'.encode())
 
                             data = s.recv(0).decode()
@@ -185,7 +189,7 @@ while programState == 1:
                         # If the user says no, redisplay the options menu and set back to active.
                         if closeConfirm == 'N':
                             # Redisplay the options menu.
-                            displayMenu()
+                            displayMenuServer()
 
                             # Set the program back to active.
                             programState = 1
