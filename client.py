@@ -113,13 +113,15 @@ while programState == "normal":
                 data = s.recv(1024).decode()
 
                 # Notifies the user a file has been retrieved and returns the user to the server menu.
-                if data.__contains__(retrieveFileInput):
+                if data.__contains__(retrieveFileInput) and len(retrieveFileInput) >= 1:
                     print("You have retrieved the file: ", retrieveFileInput)
                     programState = "normal"
                     displayMenuServer()
                 # Otherwise warn the user a file doesn't exist and try again.
-                else:
+                elif not data.__contains__(retrieveFileInput) and len(retrieveFileInput) >= 1:
                     print("\nIMPORTANT: The file does not exist in the directory.")
+                else:
+                    print("\nIMPORTANT: Please input a filename.")
 
         # If option 4 is selected, upload (store) a file from the client to the server.
         if isConnected and option == 4:
@@ -130,7 +132,7 @@ while programState == "normal":
                 print("What file would you like to send?")
 
                 # Displays a prompt for the user to input a file to send.
-                sendFileInput = input("\nEnter a filename to send to the server: ").strip()
+                sendFileInput = input("\nEnter a file to send to the server: ").strip()
 
                 # Obtains the list from the server.
                 s.sendall('2'.encode())
@@ -142,13 +144,15 @@ while programState == "normal":
                 data = s.recv(1024).decode()
 
                 # Notifies the user a file has been sent and returns the user to the server menu.
-                if data.__contains__(sendFileInput):
+                if data.__contains__(sendFileInput) and len(sendFileInput) >= 1:
                     print("You have sent the file: ", sendFileInput)
                     programState = "normal"
                     displayMenuServer()
                 # Otherwise warn the user a file doesn't exist and try again.
-                else:
+                elif not data.__contains__(sendFileInput) and len(sendFileInput) >= 1:
                     print("\nIMPORTANT: The file does not exist in the directory.")
+                else:
+                    print("\nIMPORTANT: Please input a filename.")
 
         # If option 5 is selected, terminate (quit) the connection to the server.
         if isConnected and option == 5:
