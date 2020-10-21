@@ -117,9 +117,10 @@ while programState == "normal":
                     print("You have retrieved the file: ", retrieveFileInput)
                     programState = "normal"
                     displayMenuServer()
-                # Otherwise warn the user a file doesn't exist and try again.
+                # Warn the user a file doesn't exist and try again.
                 elif not data.__contains__(retrieveFileInput) and len(retrieveFileInput) >= 1:
                     print("\nIMPORTANT: The file does not exist in the directory.")
+                # Refuse whitespace.
                 else:
                     print("\nIMPORTANT: Please input a filename.")
 
@@ -148,9 +149,10 @@ while programState == "normal":
                     print("You have sent the file: ", sendFileInput)
                     programState = "normal"
                     displayMenuServer()
-                # Otherwise warn the user a file doesn't exist and try again.
+                # Warn the user a file doesn't exist and try again.
                 elif not data.__contains__(sendFileInput) and len(sendFileInput) >= 1:
                     print("\nIMPORTANT: The file does not exist in the directory.")
+                # Refuse whitespace.
                 else:
                     print("\nIMPORTANT: Please input a filename.")
 
