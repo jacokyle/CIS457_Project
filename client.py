@@ -3,12 +3,12 @@
 # Authors: Kyle Jacobson, Logan Jaglowski, Kade O'Laughlin
 # Date of Submission: October 26, 2020
 
-# The client program presents a command line interface with actions for the user.
+# The client program presents a command menu with actions for the user.
 
 import socket
 
 # programState of 1 means the program is active.
-programState = 1
+programState = "normal"
 
 # isConnected defines if the client is connected to the server.
 isConnected = False
@@ -40,7 +40,7 @@ def displayMenuServer():
 displayMenuClient()
 
 # While the programState is active, perform basic actions.
-while programState == 1:
+while programState == "normal":
     # Displays a prompt for the user to input their choice.
     option = input("\nEnter a number: ").strip()
 
@@ -133,10 +133,10 @@ while programState == 1:
         # If option 6 is selected, a close interface will be displayed for the client.
         if option == 6:
             # programState of 2 means the program is in the close menu.
-            programState = 2
+            programState = "closeMenu"
 
             # While the programState is in the close menu, ask the user to confirm.
-            while programState == 2:
+            while programState == "closeMenu":
 
                 # Confirm with the user that they would like to close the program.
                 if not isConnected:
@@ -158,7 +158,7 @@ while programState == 1:
                             print("Closing the client program...")
 
                             # Set the program to close.
-                            programState = 0
+                            programState = "exit"
 
                         # If the user says no, redisplay the options menu and set back to active.
                         if closeConfirm == 'N':
@@ -166,7 +166,7 @@ while programState == 1:
                             displayMenuClient()
 
                             # Set the program back to active.
-                            programState = 1
+                            programState = "normal"
 
                     # Conducts close operations when server connection does exist.
                     else:
@@ -184,7 +184,7 @@ while programState == 1:
                             s.close()
 
                             # Set the program back to active.
-                            programState = 0
+                            programState = "exit"
 
                         # If the user says no, redisplay the options menu and set back to active.
                         if closeConfirm == 'N':
@@ -192,12 +192,12 @@ while programState == 1:
                             displayMenuServer()
 
                             # Set the program back to active.
-                            programState = 1
+                            programState = "normal"
 
                 # Checks if the input is not Y or N, otherwise warn the user.
                 else:
                     print("\nIMPORTANT: Please choose Y or N.")
 
 # While the programState is set to close, exit the program.
-if programState == 0:
+if programState == "exit":
     exit()
