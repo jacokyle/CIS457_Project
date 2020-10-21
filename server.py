@@ -58,11 +58,3 @@ while programState == 1:
                 # When client chooses to send a file, accept the file from the client.
                 if data == '4':
                     continue  # This needs a function for sending files.
-
-                # When client chooses to quit the connection, close the server.
-                if data == '5':
-                    programState = 0
-
-# Close the server when client quits the connection.
-if programState == 0:
-    exit()
