@@ -36,7 +36,7 @@ def displayMenuServer():
     print("6 - (Close)      Close the client and server program.")
 
 
-# Display the options menu during startup.
+# Display the client menu during startup.
 displayMenuClient()
 
 # While the programState is normal, perform basic actions.
