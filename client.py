@@ -7,7 +7,7 @@
 
 import socket
 
-# programState of 1 means the program is active.
+# programState initializes at normal, changes depending on actions.
 programState = "normal"
 
 # isConnected defines if the client is connected to the server.
@@ -39,7 +39,7 @@ def displayMenuServer():
 # Display the options menu during startup.
 displayMenuClient()
 
-# While the programState is active, perform basic actions.
+# While the programState is normal, perform basic actions.
 while programState == "normal":
     # Displays a prompt for the user to input their choice.
     option = input("\nEnter a number: ").strip()
@@ -132,7 +132,7 @@ while programState == "normal":
 
         # If option 6 is selected, a close interface will be displayed for the client.
         if option == 6:
-            # programState of 2 means the program is in the close menu.
+            # closeMenu will display the close menu.
             programState = "closeMenu"
 
             # While the programState is in the close menu, ask the user to confirm.
@@ -157,7 +157,7 @@ while programState == "normal":
                             # Notify to the user the program is closing.
                             print("Closing the client program...")
 
-                            # Set the program to close.
+                            # Set the program to exit.
                             programState = "exit"
 
                         # If the user says no, redisplay the options menu and set back to active.
@@ -165,7 +165,7 @@ while programState == "normal":
                             # Redisplay the options menu.
                             displayMenuClient()
 
-                            # Set the program back to active.
+                            # Set the program back to normal.
                             programState = "normal"
 
                     # Conducts close operations when server connection does exist.
@@ -183,7 +183,7 @@ while programState == "normal":
                             data = s.recv(0).decode()
                             s.close()
 
-                            # Set the program back to active.
+                            # Set the program to exit.
                             programState = "exit"
 
                         # If the user says no, redisplay the options menu and set back to active.
@@ -191,13 +191,13 @@ while programState == "normal":
                             # Redisplay the options menu.
                             displayMenuServer()
 
-                            # Set the program back to active.
+                            # Set the program back to normal.
                             programState = "normal"
 
                 # Checks if the input is not Y or N, otherwise warn the user.
                 else:
                     print("\nIMPORTANT: Please choose Y or N.")
 
-# While the programState is set to close, exit the program.
+# While the programState is exit, shutdown the programs.
 if programState == "exit":
     exit()
