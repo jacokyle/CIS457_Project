@@ -41,7 +41,7 @@ displayMenuClient()
 
 # While the programState is normal, perform basic actions.
 while programState == "normal":
-    # Displays a prompt for the user to input their choice.
+    # Displays a prompt for the user to input their menu option.
     option = input("\nEnter a number: ").strip()
 
     # If the input is not a number or too long, warn the user.
@@ -67,94 +67,95 @@ while programState == "normal":
                 print("Please choose 1 or 6.")
 
         # If option 1 is selected, connect to a server.
-        if option == 1:
+        if not isConnected and option == 1:
+            print("Connecting to the server...")
+            s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            s.connect((HOST, PORT))
+            isConnected = True
 
-            # Connect the client to the server.
-            if not isConnected:
-                print("Connecting to the server...")
-                s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-                s.connect((HOST, PORT))
-                isConnected = True
-
-                displayMenuServer()
+            displayMenuServer()
 
         # If option 2 is selected, list files stored at the server.
-        if option == 2:
+        if isConnected and option == 2:
+            print("Listing contents of current directory...\n")
+            s.sendall('2'.encode())
 
-            # List all files in the server directory.
-            if isConnected:
-                print("Listing contents of current directory...\n")
-                s.sendall('2'.encode())
+            data = s.recv(1024).decode()
 
-                data = s.recv(1024).decode()
-
-                print(data)
+            print(data)
+            displayMenuServer()
 
         # If option 3 is selected, download (retrieve) a file from the server.
-        if option == 3:
+        if isConnected and option == 3:
             programState = "retrieveFile"
 
             # Enter the retrieveFile state.
             while programState == "retrieveFile":
                 print("What file would you like to retrieve?")
 
+                # Displays a prompt for the user to input a file to retrieve.
                 retrieveFileInput = input("\nEnter a file to retrieve from the server: ").strip()
 
-                # Retrieve a specified file from the server for the client.
-                if isConnected:
-                    s.sendall('2'.encode())
-                    s.sendall('3'.encode())
+                # Obtains the list from the server.
+                s.sendall('2'.encode())
 
-                    data = s.recv(1024).decode()
+                # Performs the file retrieval process from the server.
+                s.sendall('3'.encode())
 
-                    # Notifies the user when a file has been retrieved.
-                    if data.__contains__(retrieveFileInput):
-                        print("You have retrieved the file: ", retrieveFileInput)
+                # Decodes the server information for the client.
+                data = s.recv(1024).decode()
 
-                        programState = "normal"
-                    else:
-                        print("IMPORTANT: The file does not exist in the directory.\n")
+                # Notifies the user a file has been retrieved and sets back to normal.
+                if data.__contains__(retrieveFileInput):
+                    print("You have retrieved the file: ", retrieveFileInput)
+                    programState = "normal"
+                    displayMenuServer()
+                # Otherwise warn the user and try again.
+                else:
+                    print("\nIMPORTANT: The file does not exist in the directory.")
 
         # If option 4 is selected, upload (store) a file from the client to the server.
-        if option == 4:
+        if isConnected and option == 4:
             programState = "sendFile"
 
             # Enter the sendFile state.
             while programState == "sendFile":
                 print("What file would you like to send?")
 
+                # Displays a prompt for the user to input a file to send.
                 sendFileInput = input("\nEnter a filename to send to the server: ").strip()
 
-                # Send a specified file to the server from the client.
-                if isConnected:
-                    s.sendall('2'.encode())
-                    s.sendall('3'.encode())
+                # Obtains the list from the server.
+                s.sendall('2'.encode())
 
-                    data = s.recv(1024).decode()
+                # Performs the file sending process from the server.
+                s.sendall('4'.encode())
 
-                    # Notifies the user when a file has been sent.
-                    if data.__contains__(sendFileInput):
-                        print("You have sent the file: ", sendFileInput)
+                # Decodes the server information for the client.
+                data = s.recv(1024).decode()
 
-                        programState = "normal"
-                    else:
-                        print("IMPORTANT: The file does not exist in the directory.\n")
+                # Notifies the user a file has been sent and sets back to normal.
+                if data.__contains__(sendFileInput):
+                    print("You have sent the file: ", sendFileInput)
+                    programState = "normal"
+                    displayMenuServer()
+                # Otherwise warn the user and try again.
+                else:
+                    print("\nIMPORTANT: The file does not exist in the directory.")
 
         # If option 5 is selected, terminate (quit) the connection to the server.
-        if option == 5:
+        if isConnected and option == 5:
+            # Label the client disconnected from server.
+            isConnected = False
 
-            # Terminate the connection between the client and server.
-            if isConnected:
-                # Label the client disconnected from server.
-                isConnected = False
+            print("Terminating client and server connection...")
 
-                print("Terminating client and server connection...")
-                s.sendall('5'.encode())
+            # Decodes the server information for the client.
+            data = s.recv(0).decode()
+            s.close()
 
-                data = s.recv(0).decode()
-                s.close()
-
-                displayMenuClient()
+            #
+            displayMenuClient()
 
         # If option 6 is selected, a close interface will be displayed for the client.
         if option == 6:
@@ -170,55 +171,47 @@ while programState == "normal":
                 else:
                     print('Would you like to close the client and server program?')
 
+                # Displays a prompt for the user to input shutdown confirmation.
                 closeConfirm = input("\nEnter Y or N: ").upper().strip()
 
-                # Checks if the input is Y or N, which continues closing function.
-                if closeConfirm == 'Y' or closeConfirm == 'N':
+                # If the user says yes while disconnected, close the client program.
+                if closeConfirm == 'Y':
 
-                    # Conducts close operations when server connection does not exist.
-                    if not isConnected:
+                    # Perform the appropriate shutdown based on connectivity.
+                    if isConnected:
+                        # Notify to the user the program is closing.
+                        print("Closing client and server programs...")
 
-                        # If the user says yes, close the entire program.
-                        if closeConfirm == 'Y':
-                            # Notify to the user the program is closing.
-                            print("Closing the client program...")
+                        # Performs the shutdown action for server.
+                        s.sendall('6'.encode())
 
-                            # Set the program to exit.
-                            programState = "exit"
+                        # Decodes the server information for the client.
+                        data = s.recv(0).decode()
 
-                        # If the user says no, redisplay the options menu and set back to active.
-                        if closeConfirm == 'N':
-                            # Redisplay the options menu.
-                            displayMenuClient()
+                        # Closes the socket between client and server.
+                        s.close()
 
-                            # Set the program back to normal.
-                            programState = "normal"
-
-                    # Conducts close operations when server connection does exist.
+                        # Set the program to exit.
+                        isConnected = False
+                        programState = "exit"
                     else:
+                        # Notify to the user the program is closing.
+                        print("Closing the client program...")
 
-                        # If the user says yes, warn the user to end the connection with server first.
-                        if closeConfirm == 'Y':
-                            # Label the client disconnected from server.
-                            isConnected = False
+                        # Set the program to exit.
+                        programState = "exit"
 
-                            # Notify to the user the program is closing.
-                            print("Closing client and server programs...")
-                            s.sendall('6'.encode())
+                # If the user says no while disconnected, set the program back to normal.
+                elif closeConfirm == 'N':
 
-                            data = s.recv(0).decode()
-                            s.close()
+                    # Display the correct menu based on connectivity.
+                    if isConnected:
+                        displayMenuServer()
+                    else:
+                        displayMenuClient()
 
-                            # Set the program to exit.
-                            programState = "exit"
-
-                        # If the user says no, redisplay the options menu and set back to active.
-                        if closeConfirm == 'N':
-                            # Redisplay the options menu.
-                            displayMenuServer()
-
-                            # Set the program back to normal.
-                            programState = "normal"
+                    # Set the program back to normal.
+                    programState = "normal"
 
                 # Checks if the input is not Y or N, otherwise warn the user.
                 else:
