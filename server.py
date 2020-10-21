@@ -41,9 +41,6 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
         while True:
             data = conn.recv(1024).decode()
 
-            if data == '1':
-                break
-
             # When client chooses to list files, list the files in the current directory.
             if data == '2':
                 listFiles(conn)
@@ -55,3 +52,8 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
             # When client chooses to send a file, accept the file from the client.
             if data == '4':
                 continue  # This needs a function for sending files.
+
+            # When client chooses to close the program, shutdown the server.
+            if data == '6':
+                conn.close()
+                exit()

@@ -25,7 +25,7 @@ def displayMenu():
     print("3 - (Retrieve)   Retrieve a file from the server.")
     print("4 - (Store)      Store a file from the client to the server.")
     print("5 - (Quit)       Terminate the connection with the server.")
-    print("6 - (Close)      Close the client program.")
+    print("6 - (Close)      Close the FTP Server program.")
 
 
 # Display the options menu during startup.
@@ -138,7 +138,7 @@ while programState == 1:
             # While the programState is in the close menu, ask the user to confirm.
             while programState == 2:
                 # Confirm with the user that they would like to close the program.
-                print('Would you like to close the client program?')
+                print('Would you like to close the FTP Server program?')
                 closeConfirm = input("\nEnter Y or N: ").upper().strip()
 
                 # Checks if the input is Y or N, which continues closing function.
@@ -150,7 +150,7 @@ while programState == 1:
                         # If the user says yes, close the entire program.
                         if closeConfirm == 'Y':
                             # Notify to the user the program is closing.
-                            print("Closing the client program...")
+                            print("Closing the FTP Server program...")
 
                             # Set the program to close.
                             programState = 0
@@ -168,14 +168,16 @@ while programState == 1:
 
                         # If the user says yes, warn the user to end the connection with server first.
                         if closeConfirm == 'Y':
-                            # Warn the user that the that need to disconnect from the server before closing.
-                            print('\nIMPORTANT: Please use option 5 to disconnect from server first.')
+                            isConnected = False
 
-                            # Redisplay the options menu.
-                            displayMenu()
+                            print("Closing FTP Server program...")
+                            s.sendall('6'.encode())
+
+                            data = s.recv(0).decode()
+                            s.close()
 
                             # Set the program back to active.
-                            programState = 1
+                            programState = 0
 
                         # If the user says no, redisplay the options menu and set back to active.
                         if closeConfirm == 'N':
