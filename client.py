@@ -122,6 +122,7 @@ while programState == 1:
 
             # Terminate the connection between the client and server.
             else:
+                # Label the client disconnected from server.
                 isConnected = False
 
                 print("Terminating client and server connection...")
@@ -168,8 +169,10 @@ while programState == 1:
 
                         # If the user says yes, warn the user to end the connection with server first.
                         if closeConfirm == 'Y':
+                            # Label the client disconnected from server.
                             isConnected = False
 
+                            # Notify to the user the program is closing.
                             print("Closing FTP Server program...")
                             s.sendall('6'.encode())
 
