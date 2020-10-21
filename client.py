@@ -77,12 +77,19 @@ while programState == "normal":
 
         # If option 2 is selected, list files stored at the server.
         if isConnected and option == 2:
+            # Notify to the user the server has listed the contents of the directory.
             print("Listing contents of current directory...\n")
+
+            # Obtains the list from the server.
             s.sendall('2'.encode())
 
+            # Decodes the server information for the client.
             data = s.recv(1024).decode()
 
+            # Print the list from the server.
             print(data)
+
+            # Return the user to the server menu.
             displayMenuServer()
 
         # If option 3 is selected, download (retrieve) a file from the server.
@@ -105,12 +112,12 @@ while programState == "normal":
                 # Decodes the server information for the client.
                 data = s.recv(1024).decode()
 
-                # Notifies the user a file has been retrieved and sets back to normal.
+                # Notifies the user a file has been retrieved and returns the user to the server menu.
                 if data.__contains__(retrieveFileInput):
                     print("You have retrieved the file: ", retrieveFileInput)
                     programState = "normal"
                     displayMenuServer()
-                # Otherwise warn the user and try again.
+                # Otherwise warn the user a file doesn't exist and try again.
                 else:
                     print("\nIMPORTANT: The file does not exist in the directory.")
 
@@ -134,30 +141,31 @@ while programState == "normal":
                 # Decodes the server information for the client.
                 data = s.recv(1024).decode()
 
-                # Notifies the user a file has been sent and sets back to normal.
+                # Notifies the user a file has been sent and returns the user to the server menu.
                 if data.__contains__(sendFileInput):
                     print("You have sent the file: ", sendFileInput)
                     programState = "normal"
                     displayMenuServer()
-                # Otherwise warn the user and try again.
+                # Otherwise warn the user a file doesn't exist and try again.
                 else:
                     print("\nIMPORTANT: The file does not exist in the directory.")
 
         # If option 5 is selected, terminate (quit) the connection to the server.
         if isConnected and option == 5:
-            # Label the client disconnected from server.
-            isConnected = False
-
+            # Notify to the user the connection between client and server has terminated.
             print("Terminating client and server connection...")
 
             # Decodes the server information for the client.
             data = s.recv(0).decode()
+
+            # Closes the socket between client and server.
             s.close()
 
-            #
+            # Return the user to the client menu..
+            isConnected = False
             displayMenuClient()
 
-        # If option 6 is selected, a close interface will be displayed for the client.
+        # If option 6 is selected, a close operation will be displayed for the user.
         if option == 6:
             # closeMenu will display the close menu.
             programState = "closeMenu"
@@ -174,7 +182,7 @@ while programState == "normal":
                 # Displays a prompt for the user to input shutdown confirmation.
                 closeConfirm = input("\nEnter Y or N: ").upper().strip()
 
-                # If the user says yes while disconnected, close the client program.
+                # If the user says yes, close the program.
                 if closeConfirm == 'Y':
 
                     # Perform the appropriate shutdown based on connectivity.
@@ -201,7 +209,7 @@ while programState == "normal":
                         # Set the program to exit.
                         programState = "exit"
 
-                # If the user says no while disconnected, set the program back to normal.
+                # If the user says no, sets the program back to normal.
                 elif closeConfirm == 'N':
 
                     # Display the correct menu based on connectivity.
