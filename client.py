@@ -80,7 +80,7 @@ while programState == "normal":
             # Notify to the user the server has listed the contents of the directory.
             print("Listing contents of current directory...\n")
 
-            # Obtains the list from the server.
+            # Performs the directory listing function from the server.
             s.sendall('2'.encode())
 
             # Decodes the server information for the client.
@@ -106,7 +106,7 @@ while programState == "normal":
                 # Obtains the list from the server.
                 s.sendall('2'.encode())
 
-                # Performs the file retrieval process from the server.
+                # Performs the file retrieval function from the server.
                 s.sendall('3'.encode())
 
                 # Decodes the server information for the client.
@@ -138,7 +138,7 @@ while programState == "normal":
                 # Obtains the list from the server.
                 s.sendall('2'.encode())
 
-                # Performs the file sending process from the server.
+                # Performs the file sending function from the server.
                 s.sendall('4'.encode())
 
                 # Decodes the server information for the client.
@@ -196,7 +196,7 @@ while programState == "normal":
                         # Notify to the user the program is closing.
                         print("Closing client and server programs...")
 
-                        # Performs the shutdown action for server.
+                        # Performs the shutdown action for the server.
                         s.sendall('6'.encode())
 
                         # Decodes the server information for the client.
