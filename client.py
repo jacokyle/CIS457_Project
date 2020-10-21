@@ -68,11 +68,17 @@ while programState == "normal":
 
         # If option 1 is selected, connect to a server.
         if not isConnected and option == 1:
+            # Notify to the user the client has connected to the server.
             print("Connecting to the server...")
+
+            # Create a socket that the client and server interact with.
             s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             s.connect((HOST, PORT))
+
+            # Sets the client to connected with the server.
             isConnected = True
 
+            # Return the user to the server menu.
             displayMenuServer()
 
         # If option 2 is selected, list files stored at the server.
