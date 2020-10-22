@@ -35,28 +35,32 @@ def sendFile():
 with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
     s.bind((HOST, PORT))
     s.listen()
+
+    # Print the initial connection of the client.
     conn, addr = s.accept()
     print('Connected by:', addr)
 
-    while True:
-        data = conn.recv(1024).decode()
+    with conn:
+        while True:
+            # Decodes the client information for the server.
+            data = conn.recv(1024).decode()
 
-        # Allows for the disconnected client to be accepted again.
-        if not data:
+            # When client chooses to list files, list the files in the current directory.
+            if data == '2':
+                listFiles(conn)
+
+            # When client chooses to retrieve a file, send the file to the client.
+            if data == '3':
+                continue  # This needs a function for retrieving files.
+
+            # When client chooses to send a file, accept the file from the client.
+            if data == '4':
+                continue  # This needs a function for sending files.
+
+            # When client chooses to close the program, shutdown the server.
+            if data == '6':
+                conn.close()
+
+            # Print the future connections of the clients.
             conn, addr = s.accept()
-
-        # When client chooses to list files, list the files in the current directory.
-        if data == '2':
-            listFiles(conn)
-
-        # When client chooses to retrieve a file, send the file to the client.
-        if data == '3':
-            continue  # This needs a function for retrieving files.
-
-        # When client chooses to send a file, accept the file from the client.
-        if data == '4':
-            continue  # This needs a function for sending files.
-
-        # When client chooses to close the program, shutdown the server.
-        if data == '6':
-            conn.close()
+            print('Connected by:', addr)

@@ -120,7 +120,7 @@ while programState == "normal":
 
                 # Notifies the user a file has been retrieved and returns the user to the server menu.
                 if data.__contains__(retrieveFileInput) and len(retrieveFileInput) >= 1:
-                    print("You have retrieved the file: ", retrieveFileInput)
+                    print("You have retrieved the file:", retrieveFileInput)
                     programState = "normal"
                     displayMenuServer()
                 # Warn the user a file doesn't exist and try again.
@@ -152,7 +152,7 @@ while programState == "normal":
 
                 # Notifies the user a file has been sent and returns the user to the server menu.
                 if data.__contains__(sendFileInput) and len(sendFileInput) >= 1:
-                    print("You have sent the file: ", sendFileInput)
+                    print("You have sent the file:", sendFileInput)
                     programState = "normal"
                     displayMenuServer()
                 # Warn the user a file doesn't exist and try again.
