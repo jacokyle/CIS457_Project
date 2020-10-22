@@ -41,6 +41,10 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
         while True:
             data = conn.recv(1024).decode()
 
+            # Allows for the disconnected client to be accepted again.
+            if not data:
+                conn, addr = s.accept()
+
             # When client chooses to list files, list the files in the current directory.
             if data == '2':
                 listFiles(conn)
