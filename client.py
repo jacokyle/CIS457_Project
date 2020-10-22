@@ -13,7 +13,7 @@ programState = "normal"
 # isConnected defines if the client is connected to the server.
 isConnected = False
 
-HOST = '127.0.0.1'  # The server's hostname or IP address.
+HOST = socket.gethostname()  # The server's hostname or IP address.
 PORT = 4000  # The port used by the server.
 
 
@@ -165,7 +165,7 @@ while programState == "normal":
         # If option 5 is selected, terminate (quit) the connection to the server.
         if isConnected and option == 5:
             # Notify to the user the connection between client and server has terminated.
-            print("Terminating client and server connection...")
+            print("Disconnecting from the server...")
 
             # Decodes the server information for the client.
             data = s.recv(0).decode()
