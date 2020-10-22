@@ -45,6 +45,11 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
             # Decodes the client information for the server.
             data = conn.recv(1024).decode()
 
+            # Print new connections of the clients.
+            if not data:
+                conn, addr = s.accept()
+                print('Connected by:', addr)
+
             # When client chooses to list files, list the files in the current directory.
             if data == '2':
                 listFiles(conn)
@@ -61,6 +66,4 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
             if data == '6':
                 conn.close()
 
-            # Print the future connections of the clients.
-            conn, addr = s.accept()
-            print('Connected by:', addr)
+
