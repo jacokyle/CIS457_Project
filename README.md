@@ -1,6 +1,6 @@
 # CIS457 - Building an FTP Server (Project 1)
 
-This project was created by Kyle Jacobson, Logan Jaglowski and Kade O'Laughlin for Data Communications (CIS 457) during the Fall 2020 semester at Grand Valley State University.
+This project was created by Kevin Rufino, Kyle Jacobson, Logan Jaglowski and Kade O'Laughlin for Data Communications (CIS 457) during the Fall 2020 semester at Grand Valley State University.
 
 This project was programmed using the Python programming language on JetBrains' PyCharm IDE.
 
