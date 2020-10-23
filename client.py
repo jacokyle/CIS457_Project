@@ -104,16 +104,19 @@ while programState == "normal":
 
             # Enter the retrieveFile state.
             while programState == "retrieveFile":
-                print("What file would you like to retrieve?")
-
-                # Displays a prompt for the user to input a file to retrieve.
-                retrieveFileInput = input("\nEnter a file to retrieve from the server: ").strip()
-
                 # Performs the directory listing function from the server.
                 s.sendall('2'.encode())
 
                 # Decodes the server information for the client.
                 data = s.recv(1024).decode()
+
+                # Print the list from the server.
+                print(data, "\n")
+
+                print("What file would you like to retrieve?")
+
+                # Displays a prompt for the user to input a file to retrieve.
+                retrieveFileInput = input("\nEnter a file to retrieve from the server: ").strip()
 
                 # Notifies the user a file has been retrieved and returns the user to the server menu.
                 if data.__contains__(retrieveFileInput) and len(retrieveFileInput) >= 1:
@@ -136,6 +139,15 @@ while programState == "normal":
 
             # Enter the sendFile state.
             while programState == "sendFile":
+                # Performs the directory listing function from the server.
+                s.sendall('2'.encode())
+
+                # Decodes the server information for the client.
+                data = s.recv(1024).decode()
+
+                # Print the list from the server.
+                print(data, "\n")
+
                 print("What file would you like to send?")
 
                 # Displays a prompt for the user to input a file to send.
