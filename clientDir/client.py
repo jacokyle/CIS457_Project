@@ -132,10 +132,16 @@ while programState == "normal":
                     fileName = data.splitlines()
 
                 # Ask the user the retrieve file question.
-                print("What file would you like to retrieve?")
+                print("What file would you like to retrieve? Otherwise, type /return.")
 
                 # Displays a prompt for the user to input a file to retrieve.
                 retrieveFileInput = input("\nEnter a file to retrieve from the server: ").strip()
+
+                # Allows the user to return to server menu.
+                if retrieveFileInput == "/return":
+                    programState = "normal"
+                    displayMenuServer()
+                    break
 
                 # Notifies the user a file has been retrieved and returns the user to the server menu.
                 if retrieveFileInput in fileName and len(retrieveFileInput) >= 1:
@@ -181,10 +187,16 @@ while programState == "normal":
                     fileName = clientDir.splitlines()
 
                 # Ask the user the send file question.
-                print("What file would you like to send?")
+                print("What file would you like to send? Otherwise, type /return.")
 
                 # Displays a prompt for the user to input a file to send.
                 sendFileInput = input("\nEnter a file to send to the server: ").strip()
+
+                # Allows the user to return to server menu.
+                if sendFileInput == "/return":
+                    programState = "normal"
+                    displayMenuServer()
+                    break
 
                 # Notifies the user a file has been sent and returns the user to the server menu.
                 if sendFileInput in fileName and len(sendFileInput) >= 1:
