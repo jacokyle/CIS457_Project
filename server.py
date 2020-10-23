@@ -34,21 +34,23 @@ def sendFile():
 # Builds the connection with the client and responds to selected options.
 with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
     s.bind((HOST, PORT))
-    s.listen()
+    s.listen(2)
 
-    # Print the initial connection of the client.
+    # Initializes the connection with the client.
     conn, addr = s.accept()
-    print('Connected by:', addr)
 
     with conn:
         while True:
             # Decodes the client information for the server.
             data = conn.recv(1024).decode()
 
-            # Print new connections of the clients.
+            # Continue listening to future connections.
             if not data:
-                print('Connected by:', addr)
                 conn, addr = s.accept()
+
+            # Print whenever a client has connected to the server.
+            if data == '1':
+                print('Connected by:', addr)
 
             # When client chooses to list files, list the files in the current directory.
             if data == '2':
@@ -74,3 +76,4 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                 print('Shutting down server...')
                 conn.close()
                 exit()
+

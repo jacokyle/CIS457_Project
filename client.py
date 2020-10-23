@@ -78,6 +78,9 @@ while programState == "normal":
             # Sets the client to connected with the server.
             isConnected = True
 
+            # Allows the server to know when new clients connect.
+            s.sendall('1'.encode())
+
             # Return the user to the server menu.
             displayMenuServer()
 
