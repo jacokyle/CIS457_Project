@@ -19,8 +19,8 @@ s = socket.socket()
 # isConnected defines if the client is connected to the server.
 isConnected = False
 
-HOST = socket.gethostname()  # The server's hostname or IP address.
-PORT = 4000  # The port used by the server.
+HOST = socket.gethostname()  # The socket's hostname or IP address.
+PORT = 4000  # The port used by the socket.
 
 
 # Function for displaying the option menu for the client.

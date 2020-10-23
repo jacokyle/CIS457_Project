@@ -8,8 +8,8 @@
 import os
 import socket
 
-HOST = socket.gethostname()  # Standard loopback interface address (localhost)
-PORT = 4000  # Port to listen on (non-privileged ports are > 1023)
+HOST = socket.gethostname()  # The socket's hostname or IP address.
+PORT = 4000  # The port used by the socket.
 
 
 # Displays the list of files in the server directory.
