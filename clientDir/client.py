@@ -7,6 +7,9 @@
 import os
 import socket
 
+HOST = socket.gethostname()  # The socket's hostname or IP address.
+PORT = 4000  # The port used by the socket.
+
 # Initializes the program state for client and server interactions.
 programState = "normal"
 
@@ -18,9 +21,6 @@ s = socket.socket()
 
 # isConnected defines if the client is connected to the server.
 isConnected = False
-
-HOST = socket.gethostname()  # The socket's hostname or IP address.
-PORT = 4000  # The port used by the socket.
 
 
 # Function for displaying the option menu for the client.
