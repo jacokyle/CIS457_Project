@@ -109,17 +109,17 @@ while programState == "normal":
                 # Displays a prompt for the user to input a file to retrieve.
                 retrieveFileInput = input("\nEnter a file to retrieve from the server: ").strip()
 
-                # Obtains the list from the server.
+                # Performs the directory listing function from the server.
                 s.sendall('2'.encode())
-
-                # Performs the file retrieval function from the server.
-                s.sendall('3'.encode())
 
                 # Decodes the server information for the client.
                 data = s.recv(1024).decode()
 
                 # Notifies the user a file has been retrieved and returns the user to the server menu.
                 if data.__contains__(retrieveFileInput) and len(retrieveFileInput) >= 1:
+                    # Performs the file retrieval function from the server.
+                    s.sendall('3'.encode())
+
                     print("You have retrieved the file:", retrieveFileInput)
                     programState = "normal"
                     displayMenuServer()
@@ -141,17 +141,17 @@ while programState == "normal":
                 # Displays a prompt for the user to input a file to send.
                 sendFileInput = input("\nEnter a file to send to the server: ").strip()
 
-                # Obtains the list from the server.
+                # Performs the directory listing function from the server.
                 s.sendall('2'.encode())
-
-                # Performs the file sending function from the server.
-                s.sendall('4'.encode())
 
                 # Decodes the server information for the client.
                 data = s.recv(1024).decode()
 
                 # Notifies the user a file has been sent and returns the user to the server menu.
                 if data.__contains__(sendFileInput) and len(sendFileInput) >= 1:
+                    # Performs the file sending function from the server.
+                    s.sendall('4'.encode())
+
                     print("You have sent the file:", sendFileInput)
                     programState = "normal"
                     displayMenuServer()
@@ -166,6 +166,9 @@ while programState == "normal":
         if isConnected and option == 5:
             # Notify to the user the connection between client and server has terminated.
             print("Disconnecting from the server...")
+
+            # Let the server know there is a disconnection.
+            s.sendall('5'.encode())
 
             # Decodes the server information for the client.
             data = s.recv(0).decode()

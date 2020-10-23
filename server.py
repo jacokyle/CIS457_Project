@@ -47,23 +47,30 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
 
             # Print new connections of the clients.
             if not data:
-                conn, addr = s.accept()
                 print('Connected by:', addr)
+                conn, addr = s.accept()
 
             # When client chooses to list files, list the files in the current directory.
             if data == '2':
+                print('Listed files for:', addr)
                 listFiles(conn)
 
             # When client chooses to retrieve a file, send the file to the client.
             if data == '3':
+                print('Sent a file to:', addr)
                 continue  # This needs a function for retrieving files.
 
             # When client chooses to send a file, accept the file from the client.
             if data == '4':
+                print('Received a file from:', addr)
                 continue  # This needs a function for sending files.
 
             # When client chooses to close the program, shutdown the server.
+            if data == '5':
+                print('Disconnected from:', addr)
+
+            # When client chooses to close the program, shutdown the server.
             if data == '6':
+                print('Shutting down server...')
                 conn.close()
-
-
+                exit()
