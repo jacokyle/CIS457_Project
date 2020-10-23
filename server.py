@@ -57,15 +57,17 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                 print('Listed files for:', addr)
                 listFiles(conn)
 
+            # TODO: Needs a function created.
             # When client chooses to retrieve a file, send the file to the client.
             if data == '3':
                 print('Sent a file to:', addr)
-                continue  # This needs a function for retrieving files.
+                continue # Needs a function.
 
+            # TODO: Needs a function created.
             # When client chooses to send a file, accept the file from the client.
             if data == '4':
                 print('Received a file from:', addr)
-                continue  # This needs a function for sending files.
+                continue # Needs a function.
 
             # When client chooses to close the program, shutdown the server.
             if data == '5':
