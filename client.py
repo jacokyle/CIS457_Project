@@ -96,6 +96,7 @@ while programState == "normal":
             data = s.recv(1024).decode()
 
             # Print the list from the server.
+            print("Current Directory with Server Program:")
             print(data)
 
             # Return the user to the server menu.
@@ -114,6 +115,7 @@ while programState == "normal":
                 data = s.recv(1024).decode()
 
                 # Print the list from the server.
+                print("Files that you can retrieve from the server:")
                 print(data, "\n")
 
                 print("What file would you like to retrieve?")
@@ -149,6 +151,7 @@ while programState == "normal":
                 data = s.recv(1024).decode()
 
                 # Print the list from the server.
+                print("Files that you can send to the server:")
                 print(data, "\n")
 
                 print("What file would you like to send?")

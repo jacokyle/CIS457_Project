@@ -16,7 +16,7 @@ PORT = 4000  # Port to listen on (non-privileged ports are > 1023)
 def listFiles(connection):
     directory = os.getcwd()
     fileList = os.listdir(directory)
-    message = 'Current Directory:\n'
+    message = ''
     message += '\n'.join(fileList)
     connection.sendall(message.encode())
 
@@ -61,13 +61,13 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
             # When client chooses to retrieve a file, send the file to the client.
             if data == '3':
                 print('Sent a file to:', addr)
-                continue # Needs a function.
+                continue  # Needs a function.
 
             # TODO: Needs a function created.
             # When client chooses to send a file, accept the file from the client.
             if data == '4':
                 print('Received a file from:', addr)
-                continue # Needs a function.
+                continue  # Needs a function.
 
             # When client chooses to close the program, shutdown the server.
             if data == '5':
