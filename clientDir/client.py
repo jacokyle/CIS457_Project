@@ -7,14 +7,21 @@
 import os
 import socket
 
-# programState initializes at normal, changes depending on actions.
+# Initializes the program state for client and server interactions.
 programState = "normal"
+
+# Initializes the filename for file retrieval and file sending.
+fileName = " "
+
+# Initializes the socket for all connections.
+s = socket.socket()
 
 # isConnected defines if the client is connected to the server.
 isConnected = False
 
 HOST = socket.gethostname()  # The server's hostname or IP address.
 PORT = 4000  # The port used by the server.
+
 
 # Function for displaying the option menu for the client.
 def displayMenuClient():
