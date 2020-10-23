@@ -34,7 +34,7 @@ def sendFile():
 # Builds the connection with the client and responds to selected options.
 with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
     s.bind((HOST, PORT))
-    s.listen(2)
+    s.listen()
 
     # Initializes the connection with the client.
     conn, addr = s.accept()
