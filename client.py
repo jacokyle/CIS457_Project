@@ -118,13 +118,14 @@ while programState == "normal":
                 print("Files that you can retrieve from the server:")
                 print(data, "\n")
 
+                # Ask the user the retrieve file question.
                 print("What file would you like to retrieve?")
 
                 # Displays a prompt for the user to input a file to retrieve.
                 retrieveFileInput = input("\nEnter a file to retrieve from the server: ").strip()
 
                 # Notifies the user a file has been retrieved and returns the user to the server menu.
-                if data.__contains__(retrieveFileInput) and len(retrieveFileInput) >= 1:
+                if retrieveFileInput in data and len(retrieveFileInput) >= 1:
                     # Performs the file retrieval function from the server.
                     s.sendall('3'.encode())
 
@@ -132,7 +133,7 @@ while programState == "normal":
                     programState = "normal"
                     displayMenuServer()
                 # Warn the user a file doesn't exist and try again.
-                elif not data.__contains__(retrieveFileInput) and len(retrieveFileInput) >= 1:
+                elif retrieveFileInput not in data and len(retrieveFileInput) >= 1:
                     print("\nIMPORTANT: The file does not exist in the directory.")
                 # Refuse whitespace.
                 else:
@@ -154,6 +155,7 @@ while programState == "normal":
                 print("Files that you can send to the server:")
                 print(data, "\n")
 
+                # Ask the user the send file question.
                 print("What file would you like to send?")
 
                 # Displays a prompt for the user to input a file to send.
@@ -166,7 +168,7 @@ while programState == "normal":
                 data = s.recv(1024).decode()
 
                 # Notifies the user a file has been sent and returns the user to the server menu.
-                if data.__contains__(sendFileInput) and len(sendFileInput) >= 1:
+                if sendFileInput in data and len(sendFileInput) >= 1:
                     # Performs the file sending function from the server.
                     s.sendall('4'.encode())
 
@@ -174,7 +176,7 @@ while programState == "normal":
                     programState = "normal"
                     displayMenuServer()
                 # Warn the user a file doesn't exist and try again.
-                elif not data.__contains__(sendFileInput) and len(sendFileInput) >= 1:
+                elif sendFileInput not in data and len(sendFileInput) >= 1:
                     print("\nIMPORTANT: The file does not exist in the directory.")
                 # Refuse whitespace.
                 else:

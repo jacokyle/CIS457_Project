@@ -16,8 +16,7 @@ PORT = 4000  # Port to listen on (non-privileged ports are > 1023)
 def listFiles(connection):
     directory = os.getcwd()
     fileList = os.listdir(directory)
-    message = ''
-    message += '\n'.join(fileList)
+    message = '\n'.join(fileList)
     connection.sendall(message.encode())
 
 
