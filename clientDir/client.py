@@ -145,6 +145,8 @@ while programState == "normal":
 
                 # Notifies the user a file has been retrieved and returns the user to the server menu.
                 if retrieveFileInput in fileName and len(retrieveFileInput) >= 1:
+                    print("Awaiting input from server...\n")
+
                     # Performs the file retrieval function from the server.
                     s.sendall('3'.encode())
 
@@ -174,13 +176,14 @@ while programState == "normal":
                 # Notify to the user the client has listed the contents of the directory.
                 print("Listing contents of client directory...\n")
 
+                # Performs the directory listing function from the server.
+                s.sendall('2'.encode())
+
                 # Displays the list of files in the client directory.
                 directory = os.getcwd()
                 fileList = os.listdir(directory)
                 clientDir = '\n'.join(fileList)
-
-                # Performs the directory listing function from the server.
-                s.sendall('2'.encode())
+                s.sendall(clientDir.encode())
 
                 # Decodes the server information for the client.
                 data = s.recv(1024).decode()
@@ -197,7 +200,7 @@ while programState == "normal":
                 print("What file would you like to send? Otherwise, type /return.")
 
                 # Displays a prompt for the user to input a file to send.
-                sendFileInput = input("\nEnter a file to send to the server: ").strip()
+                sendFileInput = input(str("\nEnter a file to send to the server: ")).strip()
 
                 # Allows the user to return to server menu.
                 if sendFileInput == "/return":
@@ -207,8 +210,15 @@ while programState == "normal":
 
                 # Notifies the user a file has been sent and returns the user to the server menu.
                 if sendFileInput in fileName and len(sendFileInput) >= 1:
+                    print("Awaiting input from server...\n")
+
                     # Performs the file sending function from the server.
                     s.sendall('4'.encode())
+
+                    # Send the designated file to the server directory.
+                    fileSelection = open(sendFileInput, "rb")
+                    fileData = fileSelection.read(1024)
+                    s.send(fileData)
 
                     print("You have sent the file:", sendFileInput)
                     programState = "normal"
