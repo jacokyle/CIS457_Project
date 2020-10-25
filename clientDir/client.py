@@ -135,7 +135,7 @@ while programState == "normal":
                 print("What file would you like to retrieve? Otherwise, type /return.")
 
                 # Displays a prompt for the user to input a file to retrieve.
-                retrieveFileInput = input("\nEnter a file to retrieve from the server: ").strip()
+                retrieveFileInput = input(str("\nEnter a file to retrieve from the server: ")).strip()
 
                 # Allows the user to return to server menu.
                 if retrieveFileInput == "/return":
@@ -148,9 +148,16 @@ while programState == "normal":
                     # Performs the file retrieval function from the server.
                     s.sendall('3'.encode())
 
+                    # Retrieve the designate file in the client directory.
+                    fileSelection = open(retrieveFileInput, "wb")
+                    fileData = s.recv(1024)
+                    fileSelection.write(fileData)
+                    fileSelection.close()
+
                     print("You have retrieved the file:", retrieveFileInput)
                     programState = "normal"
                     displayMenuServer()
+
                 # Warn the user a file doesn't exist and try again.
                 elif retrieveFileInput not in fileName and len(retrieveFileInput) >= 1:
                     print("\nIMPORTANT: The file does not exist in the directory.")

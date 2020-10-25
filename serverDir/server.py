@@ -12,22 +12,20 @@ HOST = socket.gethostname()  # The socket's hostname or IP address.
 PORT = 5000  # The port used by the socket.
 
 
+# Allow the server to send a file.
+def sendFile():
+    fileName = input("Input File: ")
+    fileSelection = open(fileName, "rb")
+    fileData = fileSelection.read(1024)
+    conn.send(fileData)
+
+
 # Displays the list of files in the server directory.
 def listFiles(connection):
     directory = os.getcwd()
     fileList = os.listdir(directory)
     message = '\n'.join(fileList)
     connection.sendall(message.encode())
-
-
-def retrieveFile():
-    print("Needs work.")
-    # Needs work.
-
-
-def sendFile():
-    print("Needs work.")
-    # Needs work.
 
 
 # Builds the connection with the client and responds to selected options.
@@ -56,12 +54,11 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                 print('Listed files for:', addr)
                 listFiles(conn)
 
-            # TODO: We need to find out how to send a file to the client.
             # When client chooses to retrieve a file, send the file to the client.
             if data == '3':
                 print('Sent a file to:', addr)
+                sendFile()
 
-            # TODO: We need to find out how to retrieve a file from the client.
             # When client chooses to send a file, accept the file from the client.
             if data == '4':
                 print('Received a file from:', addr)
