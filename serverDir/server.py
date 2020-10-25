@@ -30,11 +30,14 @@ def sendFile():
         for _ in serverDir:
             fileName = serverDir.splitlines()
 
+        # Print the list from the server.
         print("\nServer Directory Files:")
         print(serverDir)
 
+        # Ask the user the retrieve file question.
         sendingFile = input(str("\nEnter a file to send to the client: "))
 
+        # Notifies the user a file has been sent and returns the user to the server menu.
         if sendingFile in fileName and len(sendingFile) >= 1:
             fileSelection = open(sendingFile, "rb")
             fileData = fileSelection.read(1024)
@@ -52,7 +55,11 @@ def sendFile():
 
 
 def retrieveFile():
-    print()
+    programState = "sendFile"
+
+    while programState == "sendFile":
+        global fileName
+        listFiles(conn)
 
 
 # Displays the list of files in the server directory.
