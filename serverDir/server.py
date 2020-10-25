@@ -30,6 +30,9 @@ def sendFile():
         for _ in serverDir:
             fileName = serverDir.splitlines()
 
+        print("\nServer Directory Files:")
+        print(serverDir)
+
         sendingFile = input(str("\nEnter a file to send to the client: "))
 
         if sendingFile in fileName and len(sendingFile) >= 1:
