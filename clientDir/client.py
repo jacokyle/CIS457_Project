@@ -210,8 +210,6 @@ while programState == "normal":
 
                 # Notifies the user a file has been sent and returns the user to the server menu.
                 if sendFileInput in fileName and len(sendFileInput) >= 1:
-                    print("Awaiting input from server...\n")
-
                     # Performs the file sending function from the server.
                     s.sendall('4'.encode())
 

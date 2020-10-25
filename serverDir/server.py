@@ -55,11 +55,7 @@ def sendFile():
 
 
 def retrieveFile():
-    programState = "sendFile"
-
-    while programState == "sendFile":
-        global fileName
-        listFiles(conn)
+    print()
 
 
 # Displays the list of files in the server directory.
