@@ -38,12 +38,15 @@ def sendFile():
         # Ask the user the retrieve file question.
         sendingFile = input(str("\nEnter a file to send to the client: "))
 
-        # Notifies the user a file has been sent and returns the user to the server menu.
+        # Checks if the inputted file matches what was sent by the client.
         if sendingFile in fileName and len(sendingFile) >= 1:
+
+            # Read the designated file in the server directory.
             fileSelection = open(sendingFile, "rb")
             fileData = fileSelection.read(1024)
             conn.send(fileData)
 
+            # Confirms a file was sent to the client and sets back to normal.
             print('\nSent a file to:', addr)
             programState = "normal"
 
@@ -77,15 +80,19 @@ def retrieveFile():
         # Ask the user the send file question.
         retrievingFile = input(str("\nEnter a file to receive from the client: "))
 
-        # Notifies the user a file has been sent and returns the user to the server menu.
+        # Checks if the inputted file matches what was sent by the client.
         if retrievingFile in fileName and len(retrievingFile) >= 1:
-            # Retrieve the designate file in the client directory.
+
+            # Write the designated file to the client directory.
             fileSelection = open(retrievingFile, "wb")
             fileData = conn.recv(1024)
             fileSelection.write(fileData)
             fileSelection.close()
+
+            # Sends a signal to the client to continue interaction.
             conn.send(fileData)
 
+            # Confirms a file was received from the client and sets back to normal.
             print('\nReceived a file from:', addr)
             programState = "normal"
 

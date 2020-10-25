@@ -150,12 +150,13 @@ while programState == "normal":
                     # Performs the file retrieval function from the server.
                     s.sendall('3'.encode())
 
-                    # Retrieve the designate file in the client directory.
+                    # Read the designated file in the client directory.
                     fileSelection = open(retrieveFileInput, "wb")
                     fileData = s.recv(1024)
                     fileSelection.write(fileData)
                     fileSelection.close()
 
+                    # Confirm the file has been retrieved and set back to normal.
                     print("You have retrieved the file:", retrieveFileInput)
                     programState = "normal"
                     displayMenuServer()
@@ -215,19 +216,22 @@ while programState == "normal":
                     # Performs the file sending function from the server.
                     s.sendall('4'.encode())
 
-                    # Send the designated file to the server directory.
+                    # Write the designated file to the server directory.
                     fileSelection = open(sendFileInput, "rb")
                     fileData = fileSelection.read(1024)
                     s.send(fileData)
 
+                    # Notify the file has been sent and wait for server response.
                     print("\nYou have sent the file:", sendFileInput)
                     print("Awaiting input from server...")
 
                     # Decodes the server information for the client.
                     data = s.recv(1024).decode()
 
+                    # Confirm the file has been received by the server.
                     print("\nServer has received the file.")
 
+                    # Set the program back to normal.
                     programState = "normal"
                     displayMenuServer()
 
