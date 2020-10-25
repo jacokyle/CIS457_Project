@@ -183,7 +183,6 @@ while programState == "normal":
                 directory = os.getcwd()
                 fileList = os.listdir(directory)
                 clientDir = '\n'.join(fileList)
-                s.sendall(clientDir.encode())
 
                 # Decodes the server information for the client.
                 data = s.recv(1024).decode()
@@ -202,6 +201,9 @@ while programState == "normal":
                 # Displays a prompt for the user to input a file to send.
                 sendFileInput = input(str("\nEnter a file to send to the server: ")).strip()
 
+                # Sends the internal data of the specified file.
+                s.sendall(bytes(sendFileInput.encode()))
+
                 # Allows the user to return to server menu.
                 if sendFileInput == "/return":
                     programState = "normal"
@@ -218,9 +220,17 @@ while programState == "normal":
                     fileData = fileSelection.read(1024)
                     s.send(fileData)
 
-                    print("You have sent the file:", sendFileInput)
+                    print("\nYou have sent the file:", sendFileInput)
+                    print("Awaiting input from server...")
+
+                    # Decodes the server information for the client.
+                    data = s.recv(1024).decode()
+
+                    print("\nServer has received the file.")
+
                     programState = "normal"
                     displayMenuServer()
+
                 # Warn the user a file doesn't exist and try again.
                 elif sendFileInput not in fileName and len(sendFileInput) >= 1:
                     print("\nIMPORTANT: The file does not exist in the directory.")

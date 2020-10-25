@@ -7,6 +7,7 @@
 
 import os
 import socket
+from pathlib import Path
 
 HOST = socket.gethostname()  # The socket's hostname or IP address.
 PORT = 5000  # The port used by the socket.
@@ -55,7 +56,45 @@ def sendFile():
 
 
 def retrieveFile():
-    print()
+    programState = "retrieveFile"
+
+    while programState == "retrieveFile":
+
+        # Displays the list of files in the client directory.
+        global fileName
+        home = str(Path.home()) + "\PycharmProjects\FTPServer\clientDir"
+        clientFileList = os.listdir(home)
+        clientDir = '\n'.join(clientFileList)
+
+        # Parse through each file in the list.
+        for _ in clientDir:
+            fileName = clientDir.splitlines()
+
+        # Print the list from the server.
+        print("\nClient Directory Files:")
+        print(clientDir)
+
+        # Ask the user the send file question.
+        retrievingFile = input(str("\nEnter a file to receive from the client: "))
+
+        # Notifies the user a file has been sent and returns the user to the server menu.
+        if retrievingFile in fileName and len(retrievingFile) >= 1:
+            # Retrieve the designate file in the client directory.
+            fileSelection = open(retrievingFile, "wb")
+            fileData = conn.recv(1024)
+            fileSelection.write(fileData)
+            fileSelection.close()
+            conn.send(fileData)
+
+            print('\nReceived a file from:', addr)
+            programState = "normal"
+
+        # Warn the user a file doesn't exist and try again.
+        elif retrievingFile not in fileName and len(retrievingFile) >= 1:
+            print("\nIMPORTANT: The file does not exist in the directory.")
+        # Refuse whitespace.
+        else:
+            print("\nIMPORTANT: Please input a filename.")
 
 
 # Displays the list of files in the server directory.
@@ -109,4 +148,3 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                 print('Shutting down server...')
                 conn.close()
                 exit()
-
