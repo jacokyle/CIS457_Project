@@ -22,7 +22,7 @@ def sendFile():
 
     while programState == "retrieveFile":
 
-        # Displays the list of files in the client directory.
+        # Displays the list of files in the server directory.
         global fileName
         serverFileList = os.listdir(os.getcwd())
         serverDir = '\n'.join(serverFileList)
@@ -73,7 +73,7 @@ def retrieveFile():
         for _ in clientDir:
             fileName = clientDir.splitlines()
 
-        # Print the list from the server.
+        # Print the list from the client.
         print("\nClient Directory Files:")
         print(clientDir)
 
