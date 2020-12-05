@@ -1,7 +1,7 @@
-# Project 1 - Building an FTP Server
+# Project 2 - GV-NAP File Sharing System
 # CIS 457 - Data Communications
 # Authors: Kevin Rufino, Kyle Jacobson, Logan Jaglowski, Kade O'Laughlin
-# Date of Submission: October 26, 2020
+# Date of Submission: December 14, 2020
 
 # The client program presents a command menu with actions for the user.
 import os
