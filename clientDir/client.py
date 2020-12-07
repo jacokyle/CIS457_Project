@@ -4,6 +4,7 @@
 # Date of Submission: December 14, 2020
 
 # The client program presents a command menu with actions for the user.
+
 import os
 import socket
 
