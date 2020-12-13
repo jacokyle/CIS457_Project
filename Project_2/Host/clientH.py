@@ -3,9 +3,11 @@
 # Authors: Kyle Jacobson, Logan Jaglowski, Kade O'Laughlin, Kevin Rufino
 # Date of Submission: December 14, 2020
 
+# The clientH takes parameters for the client when executing connection.
+
 from ftplib import FTP
 
-
+# Allows the client to connect to the server using ftp.
 class Client:
     def __init__(self):
         self.ftp = FTP('')

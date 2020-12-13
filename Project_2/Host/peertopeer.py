@@ -3,20 +3,24 @@
 # Authors: Kyle Jacobson, Logan Jaglowski, Kade O'Laughlin, Kevin Rufino
 # Date of Submission: December 14, 2020
 
+# The peertopeer program contains the various elements of the GUI.
+
 import socket
 import sys
-from threading import Thread
-
-from PyQt5.QtWidgets import *
-
 import clientH
 import hostServer
+from threading import Thread
+from PyQt5.QtWidgets import *
 
+# The socket's hostname or IP address.
 HOST = socket.gethostname()
+
+# Initializes the global variables.
 isWaitingToConnect = True
 USERNAME = ''
 
 
+# Begins the connection to the host server.
 def server():
     hostServer.beginConnect()
 
@@ -115,7 +119,6 @@ class GUI(QWidget):
         self.layout3.addWidget(self.commandText)
 
         # Add the 3 primary layouts to the main layout.
-
         self.overallLayout.addLayout(self.layout)
         self.overallLayout.addLayout(self.layout2)
         self.overallLayout.addLayout(self.layout3)
@@ -123,9 +126,11 @@ class GUI(QWidget):
         # Set the main layout to appear.
         self.setLayout(self.overallLayout)
 
-        #
+        # Enables the command and search buttons.
         self.commandButton.setEnabled(False)
         self.SearchButton.setEnabled(False)
+
+        # Allows the connect and command buttons to be clicked.
         self.connectButton.clicked.connect(self.connect_pressed)
         self.commandButton.clicked.connect(self.command_pressed)
 
@@ -140,13 +145,14 @@ class GUI(QWidget):
         returnValue = self.GUIClient.clientConnect(self.hostName, int(self.portNumber), self.username,
                                                    self.serverHostname, self.speed)
         if returnValue == "Good":
-            print("Connected")
+            print("You are connected.")
         else:
-            print("not good")
+            print("You have failed to connect.")
 
         self.connectButton.setEnabled(False)
         self.commandButton.setEnabled(True)
         self.SearchButton.setEnabled(True)
+
         fname = QFileDialog.getOpenFileName(self, 'Open file', '.', "Text files (*.txt)")
 
         self.commandText.insertPlainText(">>connect " + self.hostName + " " + self.portNumber + "\n")
@@ -159,9 +165,9 @@ class GUI(QWidget):
     def command_pressed(self):
         if self.commandInput.text() == "1":
             text, okPressed = QInputDialog.getText(self, "Get Files", "File name:", QLineEdit.Normal, "")
+
             if okPressed and text != '':
                 try:
-
                     self.commandText.insertPlainText("Download successful! \n")
                     self.commandText.insertPlainText("For commands, use the following: \n")
                     self.commandText.insertPlainText("1: Retrieve \n")

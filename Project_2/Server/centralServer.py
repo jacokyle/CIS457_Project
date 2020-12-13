@@ -3,13 +3,15 @@
 # Authors: Kevin Rufino, Kyle Jacobson, Logan Jaglowski, Kade O'Laughlin
 # Date of Submission: December 14, 2020
 
+# The centralServer program begins the connection with user for the central server.
+
 import os
 import socket
-
 from pyftpdlib.authorizers import DummyAuthorizer
 from pyftpdlib.handlers import FTPHandler
 from pyftpdlib.servers import FTPServer
 
+# The socket's hostname or IP address.
 HOST = socket.gethostname()
 
 
