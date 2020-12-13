@@ -60,7 +60,7 @@ class GUI(QWidget):
         self.UsernameInput = QLineEdit()
         self.Label4 = QLabel('Hostname:')
         self.HostnameInput = QLineEdit()
-        self.HostnameInput.setText(HOST)
+        self.HostnameInput.setText(HOST.upper() + "/" + socket.gethostbyname(HOST))
         self.serverSpeed = QComboBox()
         self.serverSpeed.addItem("T1")
         self.serverSpeed.addItem("T3")
@@ -85,8 +85,8 @@ class GUI(QWidget):
         self.layout.addLayout(sublayout4)
 
         # Create components for the search table section.
-        self.Label5 = QLabel('Search:');
-        self.SearchInput = QLineEdit();
+        self.Label5 = QLabel('Search:')
+        self.SearchInput = QLineEdit()
         self.SearchButton = QPushButton("Search")
         self.SearchTable = QTableWidget()
         self.SearchTable.setRowCount(1)
@@ -106,7 +106,7 @@ class GUI(QWidget):
 
         # Create components for the command section.
         self.Label6 = QLabel('Enter Command:')
-        self.commandInput = QLineEdit();
+        self.commandInput = QLineEdit()
         self.commandButton = QPushButton("Go")
         self.commandText = QPlainTextEdit()
 
@@ -179,7 +179,7 @@ class GUI(QWidget):
                     self.commandText.insertPlainText("1: Retrieve \n")
                     self.commandText.insertPlainText("2: Quit and Exit\n")
         elif self.commandInput.text() == "2":
-            system.exit()
+            exit()
         else:
             self.commandText.insertPlainText("\nWARNING: Please us one of the following commands. \n")
             self.commandText.insertPlainText("For commands, use the following: \n")
