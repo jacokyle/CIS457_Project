@@ -20,8 +20,8 @@ HOST = socket.gethostname()
 def main():
 
         user = DummyAuthorizer()
-        user.add_anonymous("/Project_2/Host", 'elradfmwMT')
-        user.add_user('', '', '/Project_2/Host', 'elradfmwMT')
+        user.add_anonymous(os.getcwd())
+        user.add_user('', '', '.')
         handler = FTPHandler
         handler.authorizer = user
 
