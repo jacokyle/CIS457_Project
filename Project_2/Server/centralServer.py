@@ -1,37 +1,40 @@
-# Project 2 - GV-NAP File Sharing System
-# CIS 457 - Data Communications
-# Authors: Kyle Jacobson, Logan Jaglowski, Kade O'Laughlin, Kevin Rufino
-# Date of Submission: December 16, 2020
-
-# The centralServer program begins the connection with user for the central server.
-
-from threading import Thread
-import sys
-import socket
-import os
-import sys
 from ftplib import FTP
-from pyftpdlib.authorizers import DummyAuthorizer
-from pyftpdlib.handlers import FTPHandler
-from pyftpdlib.servers import FTPServer
+import sys
 
-HOST = socket.gethostname()
+class Client:
+    def __init__(self):
+        self.speed = ''
+        self.portNumber = 0
+        self.hostName = ''
+        self.serverHostname = ''
+        self.username = ''
+        self.ftp = FTP('')
 
-def main():
+    def clientConnect(self, hostName, Portnumber, username, serverHostname, speed):
+        self.hostName = hostName
+        self.portNumber = Portnumber
+        self.username = username
+        self.serverHostname = serverHostname
+        self.ftp.connect(hostName, 4488)
 
-        user = DummyAuthorizer()
-        user.add_anonymous(os.getcwd())
-        user.add_user('', '', '.')
-        handler = FTPHandler
-        handler.authorizer = user
+        try:
+            self.ftp.login("", "");
+        except:
+            return "Error authorizing"
+        return "Good"
 
-        server = FTPServer(("", 4488), handler)
-        server.max_cons = 256
-        server.max_cons_per_ip = 5
-        server.serve_forever()
+    def updateUsersAndFiles(self, fileUpload):
+        filename = "users.txt"
+        file = open(filename, 'wb')
+        self.ftp.retrbinary('RETR ' + filename, open(filename, 'wb').write)
+        file.write((self.username+ " " + self.hostName + "" + self.speed + "\n").encode())
+        file.close()
+        filename2 = fileUpload
+        file2 = open(fileUpload, 'w')
+        self.ftp.storbinary('STOR ' + filename2, file2)
+        file2.close()
 
-if __name__ == '__main__':
-    try:
-        Thread(target=main).start()
-    except:
-        exit(0)
+    def fetchFile(self, filename):
+        file = open(filename, 'w')
+        ftp.retrbinary('RETR ' + filename, open(filename, 'w').write)
+        file.close()
