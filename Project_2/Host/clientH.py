@@ -22,7 +22,7 @@ class Client:
         self.portNumber = Portnumber
         self.username = username
         self.serverHostname = serverHostname
-        self.ftp.connect(hostName, 4488)
+        self.ftp.connect('', 4488)
 
         try:
             self.ftp.login("", "");
