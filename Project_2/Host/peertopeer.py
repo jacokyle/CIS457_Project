@@ -15,6 +15,7 @@ import clientH
 from random import randint
 from pathlib import Path
 from threading import Thread
+import ntpath
 value = randint(20000, 60000)
 
 # The socket's hostname or IP address.
@@ -163,6 +164,7 @@ class GUI(QWidget):
         fname, _filter = QFileDialog.getOpenFileName(self, 'Open file',
                                             '.', "Text files (*.txt)")
         fname = str(fname)
+        fname = ntpath.basename(fname)
         self.GUIClient.updateUsersAndFiles(fname)
 
         self.commandText.insertPlainText(">> connect " + socket.gethostbyname(HOST) + " " + self.portNumber + "\n")
