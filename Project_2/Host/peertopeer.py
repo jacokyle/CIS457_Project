@@ -52,20 +52,25 @@ class GUI(QWidget):
         # Creates components for the input section.
         self.Label1 = QLabel('Server Hostname:')
         self.IPAddressInput = QLineEdit()
+
         self.Label2 = QLabel('Port:')
         self.PortInput = QLineEdit()
         self.PortInput.setText("2288")
         self.PortInput.setEnabled(False)
+
         self.Label3 = QLabel('Username:')
         self.UsernameInput = QLineEdit()
+
         self.Label4 = QLabel('Hostname:')
         self.HostnameInput = QLineEdit()
         self.HostnameInput.setText(HOST.upper() + "/" + socket.gethostbyname(HOST))
+
         self.serverSpeed = QComboBox()
         self.serverSpeed.addItem("T1")
         self.serverSpeed.addItem("T3")
         self.serverSpeed.addItem("Modem")
         self.serverSpeed.addItem("Ethernet")
+
         self.connectButton = QPushButton("Connect")
 
         # Adds the individual widgets to subLayout 3.
@@ -87,6 +92,7 @@ class GUI(QWidget):
         # Create components for the search table section.
         self.Label5 = QLabel('Search:')
         self.SearchInput = QLineEdit()
+
         self.SearchButton = QPushButton("Search")
         self.SearchTable = QTableWidget()
         self.SearchTable.setRowCount(1)
