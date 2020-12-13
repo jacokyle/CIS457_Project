@@ -1,3 +1,10 @@
+# Project 2 - GV-NAP File Sharing System
+# CIS 457 - Data Communications
+# Authors: Kyle Jacobson, Logan Jaglowski, Kade O'Laughlin, Kevin Rufino
+# Date of Submission: December 16, 2020
+
+# The clientH takes parameters for the client when executing connection.
+
 from ftplib import FTP
 import sys
 
