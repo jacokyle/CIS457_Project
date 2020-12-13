@@ -28,7 +28,7 @@ This project was programmed using the Python programming language on JetBrains' 
 
 It includes a Graphical User Interface (GUI) that uses a centralized directory indexing service to implement a P2P architecture. 
 
-The program must utilizes two components:
+The program utilizes two components:
 ### Host System
 - Query the server for files using keywords.  The host also has a file transfer client and server.  The ftp client allows a user to access files stored at the remote user locations.  The ftp server is responsible for providing file transfer services requested by a remote client.
 ### Centralized Server
