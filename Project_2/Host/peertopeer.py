@@ -5,18 +5,18 @@
 
 # The peertopeer program contains the various elements of the GUI.
 
-import sys, re, socket, traceback, threading, time
-from PyQt5.QtWidgets import *
-from PyQt5.QtCore import *
-import os
-import socket
-import hostServer
 import clientH
-from random import randint
-from pathlib import Path
-from threading import Thread
+import hostServer
 import ntpath
-value = randint(20000, 60000)
+import socket
+import sys
+from pathlib import Path
+from PyQt5.QtWidgets import *
+from random import randint
+from threading import Thread
+
+# Assigns a random port number for the client.
+value = randint(1024, 49151)
 
 # The socket's hostname or IP address.
 HOST = socket.gethostname()
@@ -57,22 +57,27 @@ class GUI(QWidget):
 
         # Creates components for the input section.
         self.Label1 = QLabel('Server Hostname:')
-        self.IPAddressInput = QLineEdit()
+        self.IPAddressInput = QLineEdit(socket.gethostbyname(HOST))
+
         self.Label2 = QLabel('Port:')
         self.PortInput = QLineEdit()
         self.PortInput.setText(str(value))
         self.PortInput.setEnabled(False)
         self.PortInput.setEnabled(False)
+
         self.Label3 = QLabel('Username:')
-        self.UsernameInput = QLineEdit()
+        self.UsernameInput = QLineEdit(str(Path.home()).split('\\').__getitem__(2))
+
         self.Label4 = QLabel('Hostname:')
         self.HostnameInput = QLineEdit()
         self.HostnameInput.setText(HOST.upper() + "/" + socket.gethostbyname(HOST))
+
         self.serverSpeed = QComboBox()
         self.serverSpeed.addItem("T1")
         self.serverSpeed.addItem("T3")
         self.serverSpeed.addItem("Modem")
         self.serverSpeed.addItem("Ethernet")
+
         self.connectButton = QPushButton("Connect")
 
         # Adds the individual widgets to subLayout 3.
@@ -144,34 +149,57 @@ class GUI(QWidget):
 
     # Provides the functions for the connect button.
     def connect_pressed(self):
-        self.hostName = self.HostnameInput.text()
+        self.serverHostname = self.IPAddressInput.text()
         self.portNumber = self.PortInput.text()
         self.username = self.UsernameInput.text()
-        self.serverHostname = self.IPAddressInput.text()
+        self.hostName = self.HostnameInput.text()
         self.speed = self.serverSpeed.currentText()
+
+        if self.serverHostname == "":
+            invalidUsername = QMessageBox()
+            invalidUsername.setIcon(QMessageBox.Critical)
+            invalidUsername.setText("Please enter an IP address")
+            invalidUsername.setWindowTitle("Server Hostname Warning")
+            invalidUsername.setStandardButtons(QMessageBox.Ok | QMessageBox.Cancel)
+            invalidUsername.exec()
+
+        if self.username == "":
+            invalidUsername = QMessageBox()
+            invalidUsername.setIcon(QMessageBox.Critical)
+            invalidUsername.setText("Please enter a username.")
+            invalidUsername.setWindowTitle("Username Warning")
+            invalidUsername.setStandardButtons(QMessageBox.Ok | QMessageBox.Cancel)
+            invalidUsername.exec()
+
+        if self.hostName == "":
+            invalidUsername = QMessageBox()
+            invalidUsername.setIcon(QMessageBox.Critical)
+            invalidUsername.setText("Please enter a host name.")
+            invalidUsername.setWindowTitle("Hostname Warning")
+            invalidUsername.setStandardButtons(QMessageBox.Ok | QMessageBox.Cancel)
+            invalidUsername.exec()
 
         returnValue = self.GUIClient.clientConnect(self.hostName, int(self.portNumber), self.username,
                                                    self.serverHostname, self.speed)
-        if returnValue == "Good":
-            print("You are connected to the server.")
-        else:
-            print("You have disconnected from the server.")
 
-        self.connectButton.setEnabled(False)
-        self.commandButton.setEnabled(True)
-        self.SearchButton.setEnabled(True)
+        if len(self.serverHostname) > 0 and len(self.username) > 0 and len(self.hostName) > 0:
+            fname, _filter = QFileDialog.getOpenFileName(self, 'Open file', '.', "Text files (*.txt)")
+            fname = str(fname)
+            fname = ntpath.basename(fname)
+            self.GUIClient.updateUsersAndFiles(fname)
 
-        fname, _filter = QFileDialog.getOpenFileName(self, 'Open file',
-                                            '.', "Text files (*.txt)")
-        fname = str(fname)
-        fname = ntpath.basename(fname)
-        self.GUIClient.updateUsersAndFiles(fname)
+            self.connectButton.setEnabled(False)
+            self.commandButton.setEnabled(True)
+            self.SearchButton.setEnabled(True)
 
-        self.commandText.insertPlainText(">> connect " + socket.gethostbyname(HOST) + " " + self.portNumber + "\n")
-        self.commandText.insertPlainText("Connected to " + socket.gethostbyname(HOST) + ":" + self.portNumber + "\n")
-        self.commandText.insertPlainText("\nFor commands, use the following: \n")
-        self.commandText.insertPlainText("1: Retrieve \n")
-        self.commandText.insertPlainText("2: Quit and Exit\n")
+            self.commandText.clear()
+            self.commandText.insertPlainText("You have connected to the server.\n")
+            self.commandText.insertPlainText("\n>> connect " + socket.gethostbyname(HOST) + " " + self.portNumber + "\n")
+            self.commandText.insertPlainText("Connected to " + socket.gethostbyname(HOST) + ":" + self.portNumber + "\n")
+            self.commandText.insertPlainText("\nFor commands, use the following: \n")
+            self.commandText.insertPlainText("1: Retrieve a File\n")
+            self.commandText.insertPlainText("2: Disconnect from Server\n")
+            self.commandText.insertPlainText("3: Close the Program\n")
 
     # Provides the functions for the command button.
     def command_pressed(self):
@@ -182,22 +210,33 @@ class GUI(QWidget):
                 try:
                     self.GUIClient.fetchFile(text)
                     self.commandText.insertPlainText("\nDownload successful! \n")
-                    self.commandText.insertPlainText("For commands, use the following: \n")
-                    self.commandText.insertPlainText("1: Retrieve \n")
-                    self.commandText.insertPlainText("2: Quit and Exit\n")
+                    self.commandText.insertPlainText("\nFor commands, use the following: \n")
+                    self.commandText.insertPlainText("1: Retrieve a File\n")
+                    self.commandText.insertPlainText("2: Disconnect from Server\n")
+                    self.commandText.insertPlainText("3: Close the Program\n")
                 except:
                     self.commandText.insertPlainText("\nCould not download file. \n")
-                    self.commandText.insertPlainText("For commands, use the following: \n")
-                    self.commandText.insertPlainText("1: Retrieve \n")
-                    self.commandText.insertPlainText("2: Quit and Exit\n")
+                    self.commandText.insertPlainText("\nFor commands, use the following: \n")
+                    self.commandText.insertPlainText("1: Retrieve a File\n")
+                    self.commandText.insertPlainText("2: Disconnect from Server\n")
+                    self.commandText.insertPlainText("3: Close the Program\n")
         elif self.commandInput.text() == "2":
+            self.GUIClient.ftp.close()
+
+            self.commandText.clear()
+            self.connectButton.setEnabled(True)
+            self.commandButton.setEnabled(False)
+            self.SearchButton.setEnabled(False)
+
+            self.commandText.insertPlainText("You have disconnected from the server.")
+        elif self.commandInput.text() == "3":
             exit(0)
         else:
-            self.commandText.insertPlainText("\nWARNING: Please us one of the following commands. \n")
+            self.commandText.insertPlainText("\nWARNING: Please use one of the following commands. \n")
             self.commandText.insertPlainText("For commands, use the following: \n")
-            self.commandText.insertPlainText("1: Retrieve \n")
-            self.commandText.insertPlainText("2: Quit and Exit\n")
-
+            self.commandText.insertPlainText("1: Retrieve a File\n")
+            self.commandText.insertPlainText("2: Disconnect from Server\n")
+            self.commandText.insertPlainText("3: Close the Program\n")
 
 # Part of the main method for creating and showing a GUI object.
 def main():

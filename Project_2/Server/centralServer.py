@@ -5,30 +5,28 @@
 
 # The centralServer program begins the connection with user for the central server.
 
-from threading import Thread
-import sys
-import socket
 import os
-import sys
-from ftplib import FTP
+import socket
+from threading import Thread
 from pyftpdlib.authorizers import DummyAuthorizer
 from pyftpdlib.handlers import FTPHandler
 from pyftpdlib.servers import FTPServer
 
 HOST = socket.gethostname()
 
+
 def main():
+    user = DummyAuthorizer()
+    user.add_anonymous(os.getcwd(), perm='elradfmwM')
+    user.add_user('', '', '.', perm='elradfmwM')
+    handler = FTPHandler
+    handler.authorizer = user
 
-        user = DummyAuthorizer()
-        user.add_anonymous(os.getcwd(), perm='elradfmwM')
-        user.add_user('', '', '.', perm='elradfmwM')
-        handler = FTPHandler
-        handler.authorizer = user
+    server = FTPServer(("", 4488), handler)
+    server.max_cons = 256
+    server.max_cons_per_ip = 5
+    server.serve_forever()
 
-        server = FTPServer(("", 4488), handler)
-        server.max_cons = 256
-        server.max_cons_per_ip = 5
-        server.serve_forever()
 
 if __name__ == '__main__':
     try:

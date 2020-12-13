@@ -6,33 +6,37 @@
 # The clientH takes parameters for the client when executing connection.
 
 from ftplib import FTP
-import sys
+
 
 class Client:
     def __init__(self):
-        self.speed = ''
-        self.portNumber = 0
         self.hostName = ''
-        self.serverHostname = ''
+        self.portNumber = 0
         self.username = ''
+        self.serverHostname = ''
+        self.speed = ''
         self.ftp = FTP('')
-    def clientConnect(self, hostName, Portnumber, username, serverHostname, speed):
+
+    def clientConnect(self, hostName, portNumber, username, serverHostname, speed):
         self.hostName = hostName
-        self.portNumber = Portnumber
+        self.portNumber = portNumber
         self.username = username
         self.serverHostname = serverHostname
         self.ftp.connect('', 4488)
+
         try:
-            self.ftp.login("", "");
+            self.ftp.login("", "")
         except:
-            return "Error authorizing"
-        return "Good"
+            return "Error authorizing."
+
     def updateUsersAndFiles(self, fileUpload):
         filename = "users.txt"
-        file = open(filename, 'wb')
+
+        file = open(filename, 'ab')
         self.ftp.retrbinary('RETR ' + filename, open(filename, 'wb').write)
-        file.write((self.username+ " " + self.hostName + "" + self.speed + "\n").encode())
+        file.write((self.username + " " + self.hostName + " " + self.speed + "\n").encode())
         file.close()
+
         fileSend = open(filename, 'rb+')
         self.ftp.storbinary('STOR %s' % filename, fileSend)
         fileSend.close()
@@ -41,7 +45,8 @@ class Client:
         file2 = open(fileUpload, 'rb+')
         self.ftp.storbinary('STOR %s' % filename2, file2)
         file2.close()
+
     def fetchFile(self, filename):
         file = open(filename, 'w')
-        ftp.retrbinary('RETR ' + filename, open(filename, 'w').write)
+        self.ftp.retrbinary('RETR ' + filename, open(filename, 'wb').write)
         file.close()
