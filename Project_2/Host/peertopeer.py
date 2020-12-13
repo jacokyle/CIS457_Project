@@ -63,7 +63,6 @@ class GUI(QWidget):
         self.PortInput = QLineEdit()
         self.PortInput.setText(str(value))
         self.PortInput.setEnabled(False)
-        self.PortInput.setEnabled(False)
 
         self.Label3 = QLabel('Username:')
         self.UsernameInput = QLineEdit(str(Path.home()).split('\\').__getitem__(2))
@@ -155,6 +154,7 @@ class GUI(QWidget):
         self.hostName = self.HostnameInput.text()
         self.speed = self.serverSpeed.currentText()
 
+        # Check if serverHostname is blank.
         if self.serverHostname == "":
             invalidUsername = QMessageBox()
             invalidUsername.setIcon(QMessageBox.Critical)
@@ -163,6 +163,7 @@ class GUI(QWidget):
             invalidUsername.setStandardButtons(QMessageBox.Ok | QMessageBox.Cancel)
             invalidUsername.exec()
 
+        # Check if username is blank.
         if self.username == "":
             invalidUsername = QMessageBox()
             invalidUsername.setIcon(QMessageBox.Critical)
@@ -171,6 +172,7 @@ class GUI(QWidget):
             invalidUsername.setStandardButtons(QMessageBox.Ok | QMessageBox.Cancel)
             invalidUsername.exec()
 
+        # Check if hostName is blank.
         if self.hostName == "":
             invalidUsername = QMessageBox()
             invalidUsername.setIcon(QMessageBox.Critical)
@@ -179,10 +181,11 @@ class GUI(QWidget):
             invalidUsername.setStandardButtons(QMessageBox.Ok | QMessageBox.Cancel)
             invalidUsername.exec()
 
-        returnValue = self.GUIClient.clientConnect(self.hostName, int(self.portNumber), self.username,
-                                                   self.serverHostname, self.speed)
-
+        # If all fields have information, allow a connection to occur.
         if len(self.serverHostname) > 0 and len(self.username) > 0 and len(self.hostName) > 0:
+            self.GUIClient.clientConnect(self.hostName, int(self.portNumber), self.username,
+                                         self.serverHostname, self.speed)
+
             fname, _filter = QFileDialog.getOpenFileName(self, 'Open file', '.', "Text files (*.txt)")
             fname = str(fname)
             fname = ntpath.basename(fname)
@@ -194,9 +197,11 @@ class GUI(QWidget):
 
             self.commandText.clear()
             self.commandText.insertPlainText("You have connected to the server.\n")
-            self.commandText.insertPlainText("\n>> connect " + socket.gethostbyname(HOST) + " " + self.portNumber + "\n")
-            self.commandText.insertPlainText("Connected to " + socket.gethostbyname(HOST) + ":" + self.portNumber + "\n")
-            self.commandText.insertPlainText("\nFor commands, use the following: \n")
+            self.commandText.insertPlainText(
+                "\n>> connect " + socket.gethostbyname(HOST) + " " + self.portNumber + "\n")
+            self.commandText.insertPlainText(
+                "Connected to " + socket.gethostbyname(HOST) + ":" + self.portNumber + "\n")
+            self.commandText.insertPlainText("\nFor commands, use the corresponding number: \n")
             self.commandText.insertPlainText("1: Retrieve a File\n")
             self.commandText.insertPlainText("2: Disconnect from Server\n")
             self.commandText.insertPlainText("3: Close the Program\n")
@@ -210,13 +215,13 @@ class GUI(QWidget):
                 try:
                     self.GUIClient.fetchFile(text)
                     self.commandText.insertPlainText("\nDownload successful! \n")
-                    self.commandText.insertPlainText("\nFor commands, use the following: \n")
+                    self.commandText.insertPlainText("\nFor commands, use the corresponding number: \n")
                     self.commandText.insertPlainText("1: Retrieve a File\n")
                     self.commandText.insertPlainText("2: Disconnect from Server\n")
                     self.commandText.insertPlainText("3: Close the Program\n")
                 except:
                     self.commandText.insertPlainText("\nCould not download file. \n")
-                    self.commandText.insertPlainText("\nFor commands, use the following: \n")
+                    self.commandText.insertPlainText("\nFor commands, use the corresponding number: \n")
                     self.commandText.insertPlainText("1: Retrieve a File\n")
                     self.commandText.insertPlainText("2: Disconnect from Server\n")
                     self.commandText.insertPlainText("3: Close the Program\n")
@@ -233,10 +238,11 @@ class GUI(QWidget):
             exit(0)
         else:
             self.commandText.insertPlainText("\nWARNING: Please use one of the following commands. \n")
-            self.commandText.insertPlainText("For commands, use the following: \n")
+            self.commandText.insertPlainText("\nFor commands, use the corresponding number: \n")
             self.commandText.insertPlainText("1: Retrieve a File\n")
             self.commandText.insertPlainText("2: Disconnect from Server\n")
             self.commandText.insertPlainText("3: Close the Program\n")
+
 
 # Part of the main method for creating and showing a GUI object.
 def main():

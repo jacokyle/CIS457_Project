@@ -12,9 +12,11 @@ from pyftpdlib.authorizers import DummyAuthorizer
 from pyftpdlib.handlers import FTPHandler
 from pyftpdlib.servers import FTPServer
 
+# The socket's hostname or IP address.
 HOST = socket.gethostname()
 
 
+# Part of the main method for initializing the central server.
 def main():
     user = DummyAuthorizer()
     user.add_anonymous(os.getcwd(), perm='elradfmwM')
@@ -28,6 +30,7 @@ def main():
     server.serve_forever()
 
 
+# Part of the main method for executing the central server.
 if __name__ == '__main__':
     try:
         Thread(target=main).start()

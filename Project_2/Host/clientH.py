@@ -3,7 +3,7 @@
 # Authors: Kyle Jacobson, Logan Jaglowski, Kade O'Laughlin, Kevin Rufino
 # Date of Submission: December 16, 2020
 
-# The clientH takes parameters for the client when executing connection.
+# The clientH takes parameters for the client when executing the connection.
 
 from ftplib import FTP
 
@@ -23,10 +23,10 @@ class Client:
         self.username = username
         self.serverHostname = serverHostname
         self.speed = speed
-        self.ftp.connect('', 4488)
+        self.ftp.connect("", 4488)
 
         try:
-            self.ftp.login("", "")
+            self.ftp.login()
         except:
             return "Error authorizing."
 
