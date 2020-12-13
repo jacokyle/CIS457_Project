@@ -55,28 +55,33 @@ class GUI(QWidget):
         sublayout4 = QHBoxLayout()
         self.overallLayout = QVBoxLayout()
 
-        # Creates components for the input section.
+        # Creates components for the server host name input components.
         self.Label1 = QLabel('Server Hostname:')
         self.IPAddressInput = QLineEdit(socket.gethostbyname(HOST))
 
+        # Creates components for the port number input components.
         self.Label2 = QLabel('Port:')
         self.PortInput = QLineEdit()
         self.PortInput.setText(str(value))
         self.PortInput.setEnabled(False)
 
+        # Creates components for the username input components.
         self.Label3 = QLabel('Username:')
         self.UsernameInput = QLineEdit(str(Path.home()).split('\\').__getitem__(2))
 
+        # Creates components for the host name input components.
         self.Label4 = QLabel('Hostname:')
         self.HostnameInput = QLineEdit()
         self.HostnameInput.setText(HOST.upper() + "/" + socket.gethostbyname(HOST))
 
+        # Creates components for the speed input components.
         self.serverSpeed = QComboBox()
         self.serverSpeed.addItem("T1")
         self.serverSpeed.addItem("T3")
         self.serverSpeed.addItem("Modem")
         self.serverSpeed.addItem("Ethernet")
 
+        # Creates button for connection action.
         self.connectButton = QPushButton("Connect")
 
         # Adds the individual widgets to subLayout 3.
@@ -148,6 +153,7 @@ class GUI(QWidget):
 
     # Provides the functions for the connect button.
     def connect_pressed(self):
+        # Takes the inputs at the top of the GUI and assigns them to variables.
         self.serverHostname = self.IPAddressInput.text()
         self.portNumber = self.PortInput.text()
         self.username = self.UsernameInput.text()
@@ -186,15 +192,18 @@ class GUI(QWidget):
             self.GUIClient.clientConnect(self.hostName, int(self.portNumber), self.username,
                                          self.serverHostname, self.speed)
 
+            # Opens a menu for opening files you would like to use in the GUI.
             fname, _filter = QFileDialog.getOpenFileName(self, 'Open file', '.', "Text files (*.txt)")
             fname = str(fname)
             fname = ntpath.basename(fname)
             self.GUIClient.updateUsersAndFiles(fname)
 
+            # Enables and disables the appropriate buttons when connected to the central server.
             self.connectButton.setEnabled(False)
             self.commandButton.setEnabled(True)
             self.SearchButton.setEnabled(True)
 
+            # Clears and displays the appropriate information in the command message box.
             self.commandText.clear()
             self.commandText.insertPlainText("You have connected to the server.\n")
             self.commandText.insertPlainText(
@@ -208,10 +217,14 @@ class GUI(QWidget):
 
     # Provides the functions for the command button.
     def command_pressed(self):
+        # When the user selects 1, go through the retrieve file process.
         if self.commandInput.text() == "1":
+            # Displays a input dialog box for retrieving specific files from the directory.
             text, okPressed = QInputDialog.getText(self, "Get Files", "File Name:", QLineEdit.Normal, "")
 
+            # If okay was pressed in input dialog box and their was an input, continue.
             if okPressed and text != '':
+                # If the file exist in the directory, the download will be successful.
                 try:
                     self.GUIClient.fetchFile(text)
                     self.commandText.insertPlainText("\nDownload successful! \n")
@@ -219,12 +232,16 @@ class GUI(QWidget):
                     self.commandText.insertPlainText("1: Retrieve a File\n")
                     self.commandText.insertPlainText("2: Disconnect from Server\n")
                     self.commandText.insertPlainText("3: Close the Program\n")
+
+                # If the file does not exist in the directory, the download will be unsuccessful.
                 except:
                     self.commandText.insertPlainText("\nCould not download file. \n")
                     self.commandText.insertPlainText("\nFor commands, use the corresponding number: \n")
                     self.commandText.insertPlainText("1: Retrieve a File\n")
                     self.commandText.insertPlainText("2: Disconnect from Server\n")
                     self.commandText.insertPlainText("3: Close the Program\n")
+
+        # When the user selects 2, disconnect from the central server.
         elif self.commandInput.text() == "2":
             self.GUIClient.ftp.close()
 
@@ -234,8 +251,12 @@ class GUI(QWidget):
             self.SearchButton.setEnabled(False)
 
             self.commandText.insertPlainText("You have disconnected from the server.")
+
+        # When the user selects 3, close down the entire program.
         elif self.commandInput.text() == "3":
             exit(0)
+
+        # When the user provides incorrect input, display a warning message
         else:
             self.commandText.insertPlainText("\nWARNING: Please use one of the following commands. \n")
             self.commandText.insertPlainText("\nFor commands, use the corresponding number: \n")
