@@ -38,7 +38,7 @@ class Client:
         file.close()
         filename2 = fileUpload
         file2 = open(fileUpload, 'w')
-        self.ftp.storbinary('STOR %s' % filename2, file2)
+        self.ftp.storbinary('STOR ' + filename2, file2)
         file2.close()
 
     def fetchFile(self, filename):
