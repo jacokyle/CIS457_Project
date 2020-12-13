@@ -1,7 +1,7 @@
 # Project 2 - GV-NAP File Sharing System
 # CIS 457 - Data Communications
-# Authors: Kevin Rufino, Kyle Jacobson, Logan Jaglowski, Kade O'Laughlin
-# Date of Submission: December 14, 2020
+# Authors: Kyle Jacobson, Logan Jaglowski, Kade O'Laughlin, Kevin Rufino
+# Date of Submission: December 16, 2020
 
 # The centralServer program begins the connection with user for the central server.
 
