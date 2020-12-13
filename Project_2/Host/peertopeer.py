@@ -5,12 +5,17 @@
 
 # The peertopeer program contains the various elements of the GUI.
 
-import socket
-import sys
-import clientH
-import hostServer
-from threading import Thread
+import sys, re, socket, traceback, threading, time
 from PyQt5.QtWidgets import *
+from PyQt5.QtCore import *
+import os
+import socket
+import hostServer
+import clientH
+from random import randint
+from pathlib import Path
+from threading import Thread
+value = randint(20000, 60000)
 
 # The socket's hostname or IP address.
 HOST = socket.gethostname()
@@ -52,25 +57,21 @@ class GUI(QWidget):
         # Creates components for the input section.
         self.Label1 = QLabel('Server Hostname:')
         self.IPAddressInput = QLineEdit()
-
         self.Label2 = QLabel('Port:')
         self.PortInput = QLineEdit()
-        self.PortInput.setText("2288")
+        self.PortInput.setText(str(value))
         self.PortInput.setEnabled(False)
-
+        self.PortInput.setEnabled(False)
         self.Label3 = QLabel('Username:')
         self.UsernameInput = QLineEdit()
-
         self.Label4 = QLabel('Hostname:')
         self.HostnameInput = QLineEdit()
         self.HostnameInput.setText(HOST.upper() + "/" + socket.gethostbyname(HOST))
-
         self.serverSpeed = QComboBox()
         self.serverSpeed.addItem("T1")
         self.serverSpeed.addItem("T3")
         self.serverSpeed.addItem("Modem")
         self.serverSpeed.addItem("Ethernet")
-
         self.connectButton = QPushButton("Connect")
 
         # Adds the individual widgets to subLayout 3.
@@ -92,7 +93,6 @@ class GUI(QWidget):
         # Create components for the search table section.
         self.Label5 = QLabel('Search:')
         self.SearchInput = QLineEdit()
-
         self.SearchButton = QPushButton("Search")
         self.SearchTable = QTableWidget()
         self.SearchTable.setRowCount(1)
@@ -160,7 +160,10 @@ class GUI(QWidget):
         self.commandButton.setEnabled(True)
         self.SearchButton.setEnabled(True)
 
-        fname = QFileDialog.getOpenFileName(self, 'Open file', '.', "Text files (*.txt)")
+        fname, _filter = QFileDialog.getOpenFileName(self, 'Open file',
+                                            '.', "Text files (*.txt)")
+        fname = str(fname)
+        self.GUIClient.updateUsersAndFiles(fname)
 
         self.commandText.insertPlainText(">> connect " + socket.gethostbyname(HOST) + " " + self.portNumber + "\n")
         self.commandText.insertPlainText("Connected to " + socket.gethostbyname(HOST) + ":" + self.portNumber + "\n")
@@ -175,6 +178,7 @@ class GUI(QWidget):
 
             if okPressed and text != '':
                 try:
+                    self.GUIClient.fetchFile(text)
                     self.commandText.insertPlainText("\nDownload successful! \n")
                     self.commandText.insertPlainText("For commands, use the following: \n")
                     self.commandText.insertPlainText("1: Retrieve \n")
@@ -185,7 +189,7 @@ class GUI(QWidget):
                     self.commandText.insertPlainText("1: Retrieve \n")
                     self.commandText.insertPlainText("2: Quit and Exit\n")
         elif self.commandInput.text() == "2":
-            exit()
+            exit(0)
         else:
             self.commandText.insertPlainText("\nWARNING: Please us one of the following commands. \n")
             self.commandText.insertPlainText("For commands, use the following: \n")
