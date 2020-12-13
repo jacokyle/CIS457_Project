@@ -8,7 +8,7 @@
 from ftplib import FTP
 
 
-# Controls the many of the interactions for the client.
+# Controls many of the interactions for the client.
 class Client:
     # Initializes the different variables related to the client.
     def __init__(self):
