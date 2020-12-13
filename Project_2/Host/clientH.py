@@ -7,6 +7,7 @@
 
 from ftplib import FTP
 
+
 # Allows the client to connect to the server using ftp.
 class Client:
     def __init__(self):

@@ -25,6 +25,7 @@ def server():
     hostServer.beginConnect()
 
 
+# Creates and organizes the GUI components.
 class GUI(QWidget):
     def __init__(self, parent=None):
         self.GUIClient = clientH.Client()
@@ -145,9 +146,9 @@ class GUI(QWidget):
         returnValue = self.GUIClient.clientConnect(self.hostName, int(self.portNumber), self.username,
                                                    self.serverHostname, self.speed)
         if returnValue == "Good":
-            print("You are connected.")
+            print("You are connected to the server.")
         else:
-            print("You have failed to connect.")
+            print("You have disconnected from the server.")
 
         self.connectButton.setEnabled(False)
         self.commandButton.setEnabled(True)
@@ -155,35 +156,32 @@ class GUI(QWidget):
 
         fname = QFileDialog.getOpenFileName(self, 'Open file', '.', "Text files (*.txt)")
 
-        self.commandText.insertPlainText(">>connect " + self.hostName + " " + self.portNumber + "\n")
-        self.commandText.insertPlainText("Connected to " + self.hostName + " " + self.portNumber + "\n")
-        self.commandText.insertPlainText("For commands, use the following: \n")
+        self.commandText.insertPlainText(">> connect " + socket.gethostbyname(HOST) + " " + self.portNumber + "\n")
+        self.commandText.insertPlainText("Connected to " + socket.gethostbyname(HOST) + ":" + self.portNumber + "\n")
+        self.commandText.insertPlainText("\nFor commands, use the following: \n")
         self.commandText.insertPlainText("1: Retrieve \n")
         self.commandText.insertPlainText("2: Quit and Exit\n")
 
     # Provides the functions for the command button.
     def command_pressed(self):
         if self.commandInput.text() == "1":
-            text, okPressed = QInputDialog.getText(self, "Get Files", "File name:", QLineEdit.Normal, "")
+            text, okPressed = QInputDialog.getText(self, "Get Files", "File Name:", QLineEdit.Normal, "")
 
             if okPressed and text != '':
                 try:
-                    self.commandText.insertPlainText("Download successful! \n")
+                    self.commandText.insertPlainText("\nDownload successful! \n")
                     self.commandText.insertPlainText("For commands, use the following: \n")
                     self.commandText.insertPlainText("1: Retrieve \n")
                     self.commandText.insertPlainText("2: Quit and Exit\n")
                 except:
-                    self.commandText.insertPlainText("Could not download file.\n")
+                    self.commandText.insertPlainText("\nCould not download file. \n")
                     self.commandText.insertPlainText("For commands, use the following: \n")
                     self.commandText.insertPlainText("1: Retrieve \n")
                     self.commandText.insertPlainText("2: Quit and Exit\n")
-            else:
-                self.commandText.insertPlainText("For commands, use the following: \n")
-                self.commandText.insertPlainText("1: Retrieve \n")
-                self.commandText.insertPlainText("2: Quit and Exit\n")
         elif self.commandInput.text() == "2":
-            system.exit();
+            system.exit()
         else:
+            self.commandText.insertPlainText("\nWARNING: Please us one of the following commands. \n")
             self.commandText.insertPlainText("For commands, use the following: \n")
             self.commandText.insertPlainText("1: Retrieve \n")
             self.commandText.insertPlainText("2: Quit and Exit\n")

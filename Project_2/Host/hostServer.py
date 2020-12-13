@@ -5,10 +5,8 @@
 
 # The hostServer program begins the connection with user for the host.
 
-
 import os
 import socket
-
 from pyftpdlib.authorizers import DummyAuthorizer
 from pyftpdlib.handlers import FTPHandler
 from pyftpdlib.servers import FTPServer
