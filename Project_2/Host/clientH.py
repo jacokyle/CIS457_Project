@@ -4,7 +4,7 @@
 # Date of Submission: December 16, 2020
 
 # The clientH takes parameters for the client when executing the connection.
-
+from datetime import datetime
 from ftplib import FTP
 
 
@@ -40,7 +40,12 @@ class Client:
         # Allows appending of new users to the users.txt file.
         file = open(filename, 'ab')
         self.ftp.retrbinary('RETR ' + filename, open(filename, 'wb').write)
-        file.write((self.username + " " + self.hostName + " " + self.speed + "\n").encode())
+        file.write(("User Information" + "\n"
+                    "Username: " + self.username + "\n" +
+                    "Host Name: " + self.hostName + "\n" +
+                    "Speed: " + self.speed + "\n" +
+                    "Time: " + str(datetime.now()) + "\n\n")
+                   .encode())
         file.close()
 
         # Allows file to be opened on the client.
