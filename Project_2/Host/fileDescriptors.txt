@@ -1,4 +1,0 @@
-filler.txt Start of Program
-descriptors.txt ljrul ItWorks Nice
-
-users.txt ljrul DESKTOP-6B2M0LQ/10.0.0.12 T1
