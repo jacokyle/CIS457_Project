@@ -107,9 +107,13 @@ class GUI(QWidget):
         self.searchTable = QTableWidget()
         self.searchTable.setRowCount(1)
         self.searchTable.setColumnCount(3)
+        self.searchTable.horizontalHeader().setSectionResizeMode(0, QHeaderView.Stretch)
+        self.searchTable.horizontalHeader().setSectionResizeMode(1, QHeaderView.Stretch)
+        self.searchTable.horizontalHeader().setSectionResizeMode(2, QHeaderView.ResizeToContents)
         self.searchTable.setItem(0, 0, QTableWidgetItem("Speed"))
         self.searchTable.setItem(0, 1, QTableWidgetItem("Hostname"))
         self.searchTable.setItem(0, 2, QTableWidgetItem("Filename"))
+        self.searchTable.horizontalHeader().setStretchLastSection(True)
 
         # Adds the individual widgets to subLayout 1.
         sublayout1.addWidget(self.Label5)
@@ -218,11 +222,25 @@ class GUI(QWidget):
 
     # Provides the functions for the search button.
     def search_pressed(self):
+        if self.searchInput.text() == "":
+            self.searchTable.setRowCount(1)
+            self.searchTable.horizontalHeader().setSectionResizeMode(0, QHeaderView.Stretch)
+            self.searchTable.horizontalHeader().setSectionResizeMode(1, QHeaderView.Stretch)
+            self.searchTable.horizontalHeader().setSectionResizeMode(2, QHeaderView.ResizeToContents)
+            self.searchTable.setItem(0, 0, QTableWidgetItem("Speed"))
+            self.searchTable.setItem(0, 1, QTableWidgetItem("Hostname"))
+            self.searchTable.setItem(0, 2, QTableWidgetItem("Filename"))
+
         if self.searchInput.text() == "users.txt":
             self.searchTable.setRowCount(2)
+            self.searchTable.horizontalHeader().setSectionResizeMode(0, QHeaderView.Stretch)
+            self.searchTable.horizontalHeader().setSectionResizeMode(1, QHeaderView.ResizeToContents)
+            self.searchTable.horizontalHeader().setSectionResizeMode(2, QHeaderView.ResizeToContents)
             self.searchTable.setItem(1, 0, QTableWidgetItem(self.speed))
             self.searchTable.setItem(1, 1, QTableWidgetItem(self.hostName))
             self.searchTable.setItem(1, 2, QTableWidgetItem("users.txt"))
+
+        self.searchTable.horizontalHeader().setStretchLastSection(True)
 
     # Provides the functions for the command button.
     def command_pressed(self):
