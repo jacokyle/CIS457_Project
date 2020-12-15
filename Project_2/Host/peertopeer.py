@@ -61,18 +61,18 @@ class GUI(QWidget):
 
         # Creates components for the port number input components.
         self.Label2 = QLabel('Port:')
-        self.PortInput = QLineEdit()
-        self.PortInput.setText(str(value))
-        self.PortInput.setEnabled(False)
+        self.portInput = QLineEdit()
+        self.portInput.setText(str(value))
+        self.portInput.setEnabled(False)
 
         # Creates components for the username input components.
         self.Label3 = QLabel('Username:')
-        self.UsernameInput = QLineEdit(str(Path.home()).split('\\').__getitem__(2))
+        self.usernameInput = QLineEdit(str(Path.home()).split('\\').__getitem__(2))
 
         # Creates components for the host name input components.
         self.Label4 = QLabel('Hostname:')
-        self.HostnameInput = QLineEdit()
-        self.HostnameInput.setText(HOST.upper() + "/" + socket.gethostbyname(HOST))
+        self.hostnameInput = QLineEdit()
+        self.hostnameInput.setText(HOST.upper() + "/" + socket.gethostbyname(HOST))
 
         # Creates components for the speed input components.
         self.serverSpeed = QComboBox()
@@ -88,11 +88,11 @@ class GUI(QWidget):
         sublayout3.addWidget(self.Label1)
         sublayout3.addWidget(self.IPAddressInput)
         sublayout3.addWidget(self.Label2)
-        sublayout3.addWidget(self.PortInput)
+        sublayout3.addWidget(self.portInput)
         sublayout3.addWidget(self.Label3)
-        sublayout3.addWidget(self.UsernameInput)
+        sublayout3.addWidget(self.usernameInput)
         sublayout4.addWidget(self.Label4)
-        sublayout4.addWidget(self.HostnameInput)
+        sublayout4.addWidget(self.hostnameInput)
         sublayout4.addWidget(self.serverSpeed)
         sublayout4.addWidget(self.connectButton)
 
@@ -102,23 +102,23 @@ class GUI(QWidget):
 
         # Create components for the search table section.
         self.Label5 = QLabel('Search:')
-        self.SearchInput = QLineEdit()
-        self.SearchButton = QPushButton("Search")
-        self.SearchTable = QTableWidget()
-        self.SearchTable.setRowCount(1)
-        self.SearchTable.setColumnCount(3)
-        self.SearchTable.setItem(0, 0, QTableWidgetItem("Speed"))
-        self.SearchTable.setItem(0, 1, QTableWidgetItem("Hostname"))
-        self.SearchTable.setItem(0, 2, QTableWidgetItem("Filename"))
+        self.searchInput = QLineEdit()
+        self.searchButton = QPushButton("Search")
+        self.searchTable = QTableWidget()
+        self.searchTable.setRowCount(1)
+        self.searchTable.setColumnCount(3)
+        self.searchTable.setItem(0, 0, QTableWidgetItem("Speed"))
+        self.searchTable.setItem(0, 1, QTableWidgetItem("Hostname"))
+        self.searchTable.setItem(0, 2, QTableWidgetItem("Filename"))
 
         # Adds the individual widgets to subLayout 1.
         sublayout1.addWidget(self.Label5)
-        sublayout1.addWidget(self.SearchInput)
-        sublayout1.addWidget(self.SearchButton)
+        sublayout1.addWidget(self.searchInput)
+        sublayout1.addWidget(self.searchButton)
 
         # Create the layout 2 section for the searchTable.
         self.layout2.addLayout(sublayout1)
-        self.layout2.addWidget(self.SearchTable)
+        self.layout2.addWidget(self.searchTable)
 
         # Create components for the command section.
         self.Label6 = QLabel('Enter Command:')
@@ -145,19 +145,20 @@ class GUI(QWidget):
 
         # Enables the command and search buttons.
         self.commandButton.setEnabled(False)
-        self.SearchButton.setEnabled(False)
+        self.searchButton.setEnabled(False)
 
         # Allows the connect and command buttons to be clicked.
         self.connectButton.clicked.connect(self.connect_pressed)
+        self.searchButton.clicked.connect(self.search_pressed)
         self.commandButton.clicked.connect(self.command_pressed)
 
     # Provides the functions for the connect button.
     def connect_pressed(self):
         # Takes the inputs at the top of the GUI and assigns them to variables.
         self.serverHostname = self.IPAddressInput.text()
-        self.portNumber = self.PortInput.text()
-        self.username = self.UsernameInput.text()
-        self.hostName = self.HostnameInput.text()
+        self.portNumber = self.portInput.text()
+        self.username = self.usernameInput.text()
+        self.hostName = self.hostnameInput.text()
         self.speed = self.serverSpeed.currentText()
 
         # Check if serverHostname is blank.
@@ -201,7 +202,7 @@ class GUI(QWidget):
             # Enables and disables the appropriate buttons when connected to the central server.
             self.connectButton.setEnabled(False)
             self.commandButton.setEnabled(True)
-            self.SearchButton.setEnabled(True)
+            self.searchButton.setEnabled(True)
 
             # Clears and displays the appropriate information in the command message box.
             self.commandText.clear()
@@ -214,6 +215,14 @@ class GUI(QWidget):
             self.commandText.insertPlainText("1: Retrieve a File\n")
             self.commandText.insertPlainText("2: Disconnect from Server\n")
             self.commandText.insertPlainText("3: Close the Program\n")
+
+    # Provides the functions for the search button.
+    def search_pressed(self):
+        if self.searchInput.text() == "users.txt":
+            self.searchTable.setRowCount(2)
+            self.searchTable.setItem(1, 0, QTableWidgetItem(self.speed))
+            self.searchTable.setItem(1, 1, QTableWidgetItem(self.hostName))
+            self.searchTable.setItem(1, 2, QTableWidgetItem("users.txt"))
 
     # Provides the functions for the command button.
     def command_pressed(self):
@@ -248,7 +257,7 @@ class GUI(QWidget):
             self.commandText.clear()
             self.connectButton.setEnabled(True)
             self.commandButton.setEnabled(False)
-            self.SearchButton.setEnabled(False)
+            self.searchButton.setEnabled(False)
 
             self.commandText.insertPlainText("You have disconnected from the server.")
 
