@@ -231,14 +231,27 @@ class GUI(QWidget):
             self.searchTable.setItem(0, 1, QTableWidgetItem("Hostname"))
             self.searchTable.setItem(0, 2, QTableWidgetItem("Filename"))
 
-        if self.searchInput.text() == "users.txt":
-            self.searchTable.setRowCount(2)
-            self.searchTable.horizontalHeader().setSectionResizeMode(0, QHeaderView.Stretch)
-            self.searchTable.horizontalHeader().setSectionResizeMode(1, QHeaderView.ResizeToContents)
-            self.searchTable.horizontalHeader().setSectionResizeMode(2, QHeaderView.ResizeToContents)
-            self.searchTable.setItem(1, 0, QTableWidgetItem(self.speed))
-            self.searchTable.setItem(1, 1, QTableWidgetItem(self.hostName))
-            self.searchTable.setItem(1, 2, QTableWidgetItem("users.txt"))
+        self.GUIClient.fetchFile("fileDescriptors.txt")
+        counter = 1
+        with open('fileDescriptors.txt', 'r') as file:
+            for line in file:
+                words = line.split()
+                if words:
+                    self.GUIClient.fetchFile(words[0])
+                    with open(words[0], 'r') as innerFile:
+                        for line2 in innerFile:
+                            for word in line2.split():
+                                if word == '\'' +self.searchInput.text() + '\'':
+                                    self.searchTable.setRowCount(counter + 1)
+                                    self.searchTable.horizontalHeader().setSectionResizeMode(0, QHeaderView.Stretch)
+                                    self.searchTable.horizontalHeader().setSectionResizeMode(1,
+                                                                                             QHeaderView.ResizeToContents)
+                                    self.searchTable.horizontalHeader().setSectionResizeMode(2,
+                                                                                             QHeaderView.ResizeToContents)
+                                    self.searchTable.setItem(counter, 0, QTableWidgetItem(self.speed))
+                                    self.searchTable.setItem(counter, 1, QTableWidgetItem(self.hostName))
+                                    self.searchTable.setItem(counter, 2, QTableWidgetItem(line2.split()[0]))
+                                    self.searchTable.horizontalHeader().setStretchLastSection(True)
 
         self.searchTable.horizontalHeader().setStretchLastSection(True)
 
