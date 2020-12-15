@@ -48,6 +48,14 @@ class Client:
                    .encode())
         file.close()
 
+        fileDescriptors = "fileDescriptors.txt"
+        # Allows appending of new users to the users.txt file.
+        file1 = open(fileDescriptors, 'ab')
+        self.ftp.retrbinary('RETR ' + fileDescriptors, open(fileDescriptors, 'wb').write)
+        file1.write((fileUpload + " " + self.username + '\n')
+                   .encode())
+        file1.close()
+
         # Allows file to be opened on the client.
         fileSend = open(filename, 'rb+')
         self.ftp.storbinary('STOR %s' % filename, fileSend)
@@ -58,6 +66,12 @@ class Client:
         file2 = open(fileUpload, 'rb+')
         self.ftp.storbinary('STOR %s' % filename2, file2)
         file2.close()
+
+        file3 = open(fileDescriptors, 'rb+')
+        self.ftp.storbinary('STOR %s' % fileDescriptors, file3)
+        file3.close()
+
+
 
     # Opens a file and writes to the appropriate location.
     def fetchFile(self, filename):
