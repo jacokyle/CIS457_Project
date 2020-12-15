@@ -222,17 +222,17 @@ class GUI(QWidget):
 
     # Provides the functions for the search button.
     def search_pressed(self):
-        if self.searchInput.text() == "":
-            self.searchTable.setRowCount(1)
-            self.searchTable.horizontalHeader().setSectionResizeMode(0, QHeaderView.Stretch)
-            self.searchTable.horizontalHeader().setSectionResizeMode(1, QHeaderView.Stretch)
-            self.searchTable.horizontalHeader().setSectionResizeMode(2, QHeaderView.ResizeToContents)
-            self.searchTable.setItem(0, 0, QTableWidgetItem("Speed"))
-            self.searchTable.setItem(0, 1, QTableWidgetItem("Hostname"))
-            self.searchTable.setItem(0, 2, QTableWidgetItem("Filename"))
+        self.searchTable.setRowCount(1)
+        self.searchTable.horizontalHeader().setSectionResizeMode(0, QHeaderView.Stretch)
+        self.searchTable.horizontalHeader().setSectionResizeMode(1, QHeaderView.Stretch)
+        self.searchTable.horizontalHeader().setSectionResizeMode(2, QHeaderView.ResizeToContents)
+        self.searchTable.setItem(0, 0, QTableWidgetItem("Speed"))
+        self.searchTable.setItem(0, 1, QTableWidgetItem("Hostname"))
+        self.searchTable.setItem(0, 2, QTableWidgetItem("Filename"))
 
         self.GUIClient.fetchFile("fileDescriptors.txt")
         counter = 1
+
         with open('fileDescriptors.txt', 'r') as file:
             for line in file:
                 words = line.split()
@@ -250,8 +250,10 @@ class GUI(QWidget):
                                                                                              QHeaderView.ResizeToContents)
                                     self.searchTable.setItem(counter, 0, QTableWidgetItem(line.split()[3]))
                                     self.searchTable.setItem(counter, 1, QTableWidgetItem(line.split()[2]))
-                                    self.searchTable.setItem(counter, 2, QTableWidgetItem(line.split()[0]))
+                                    self.searchTable.setItem(counter, 2, QTableWidgetItem(line2.split()[0]))
                                     self.searchTable.horizontalHeader().setStretchLastSection(True)
+                                    counter += 1
+                previousLine = line
 
         self.searchTable.horizontalHeader().setStretchLastSection(True)
 
