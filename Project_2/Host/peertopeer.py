@@ -248,8 +248,8 @@ class GUI(QWidget):
                                                                                              QHeaderView.ResizeToContents)
                                     self.searchTable.horizontalHeader().setSectionResizeMode(2,
                                                                                              QHeaderView.ResizeToContents)
-                                    self.searchTable.setItem(counter, 0, QTableWidgetItem(self.speed))
-                                    self.searchTable.setItem(counter, 1, QTableWidgetItem(self.hostName))
+                                    self.searchTable.setItem(counter, 0, QTableWidgetItem(line2.split()[3]))
+                                    self.searchTable.setItem(counter, 1, QTableWidgetItem(line2.split()[2]))
                                     self.searchTable.setItem(counter, 2, QTableWidgetItem(line2.split()[0]))
                                     self.searchTable.horizontalHeader().setStretchLastSection(True)
 
