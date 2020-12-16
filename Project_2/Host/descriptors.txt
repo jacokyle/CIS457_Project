@@ -1,1 +1,3 @@
 fileDescriptors.txt : 'hi' 'hello'
+NewExcel.xlsx : 'good' 'great'
+PowerPointExample.pptx : 'awesome'
