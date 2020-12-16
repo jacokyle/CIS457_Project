@@ -232,6 +232,8 @@ class GUI(QWidget):
 
     # Provides the functions for the search button.
     def search_pressed(self):
+
+        # Resets the search table to default when the user inputs whitespace.
         if self.searchInput.text() == "":
             self.searchTable.setRowCount(1)
             self.searchTable.setItem(0, 0, QTableWidgetItem("Speed"))
