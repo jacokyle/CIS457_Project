@@ -287,10 +287,10 @@ class GUI(QWidget):
                                         if word == text:
                                             portNumber = int(line.split()[4])
                                             isFound = True
-                self.GUIClient.downloadFromOtherPort(portNumber, text)
 
                 # If the file does exist in the directory, the download will be successful.
                 try:
+                    self.GUIClient.downloadFromOtherPort(portNumber, text)
                     self.commandText.clear()
                     self.commandText.insertPlainText("Download successful! \n")
                     self.commandText.insertPlainText("\nFor commands, use the corresponding number: \n")
