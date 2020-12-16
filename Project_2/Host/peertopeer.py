@@ -289,6 +289,7 @@ class GUI(QWidget):
                                             isFound = True
                 self.GUIClient.downloadFromOtherPort(portNumber, text)
 
+                # If the file does exist in the directory, the download will be successful.
                 try:
                     self.commandText.clear()
                     self.commandText.insertPlainText("Download successful! \n")
