@@ -18,6 +18,7 @@ class Client:
         self.serverHostname = ''
         self.speed = ''
         self.ftp = FTP('')
+        self.fileUpload = ''
 
     # Accepts parameters inputted from central server with anonymous login.
     def clientConnect(self, hostName, portNumber, username, serverHostname, speed):
@@ -36,6 +37,7 @@ class Client:
 
     # Allows reading and writing files when the command section is active.
     def updateUsersAndFiles(self, fileUpload):
+        self.fileUpload = fileUpload
         filename = "users.txt"
 
         # Allows appending of new users to the users.txt file.
@@ -86,3 +88,20 @@ class Client:
         thisFTP.retrbinary('RETR ' + fileName, open(fileName, 'wb').write)
         file1.close()
         thisFTP.quit()
+
+    def getRidOfDescriptor(self):
+        self.fetchFile("fileDescriptors.txt")
+        # Searches file descriptors text file to populate QTable with data.
+        checkFile = open("fileDescriptors.txt", 'r')
+        lines = checkFile.readlines()
+        checkFile.close()
+
+        newFile = open('fileDescriptors.txt', 'w')
+        for line in lines:
+            if self.fileUpload not in line:
+                newFile.write(line)
+        newFile.close()
+
+        file3 = open('fileDescriptors.txt', 'rb+')
+        self.ftp.storbinary('STOR fileDescriptors.txt', file3)
+        file3.close()
