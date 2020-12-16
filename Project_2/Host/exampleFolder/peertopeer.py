@@ -37,6 +37,8 @@ class GUI(QWidget):
         self.GUIClient = clientH.Client()
         self.layout = QVBoxLayout()
         super(GUI, self).__init__(parent)
+        finish = QAction("Quit", self)
+        finish.triggered.connect(self.closeEvent)
 
         # Sets specifications for the GUI window.
         self.setFixedSize(1000, 800)
@@ -161,7 +163,12 @@ class GUI(QWidget):
         self.connectButton.clicked.connect(self.connect_pressed)
         self.searchButton.clicked.connect(self.search_pressed)
         self.commandButton.clicked.connect(self.command_pressed)
-
+        
+    def closeEvent(self, event):
+        self.GUIClient.getRidOfDescriptor()
+        self.GUIClient.ftp.close()
+        event.accept()
+        
     # Provides the functions for the connect button.
     def connect_pressed(self):
         # Enables the search and command components.
