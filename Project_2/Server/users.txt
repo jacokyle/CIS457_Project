@@ -227,182 +227,116 @@ Speed: T1
 Time: 2020-12-15 01:04:15.046486
 
 User Information
-Username: fr0gm
-Host Name: ALIENWARE-AURORA-R7-KYLE/10.0.0.225
+Username: ljrul
+Host Name: DESKTOP-6B2M0LQ/10.0.0.12
 Speed: T1
-Time: 2020-12-15 02:38:22.922183
+Time: 2020-12-15 18:23:40.102587
 
 User Information
-Username: fr0gm
-Host Name: ALIENWARE-AURORA-R7-KYLE/10.0.0.225
+Username: ljrul
+Host Name: DESKTOP-6B2M0LQ/10.0.1.1
 Speed: T1
-Time: 2020-12-15 02:38:35.865611
+Time: 2020-12-15 18:24:56.233931
 
 User Information
-Username: fr0gm
-Host Name: ALIENWARE-AURORA-R7-KYLE/10.0.0.225
+Username: ljrul
+Host Name: DESKTOP-6B2M0LQ/10.0.0.12
 Speed: T1
-Time: 2020-12-15 02:38:50.481103
+Time: 2020-12-15 18:39:59.563529
 
 User Information
-Username: fr0gm
-Host Name: ALIENWARE-AURORA-R7-KYLE/10.0.0.225
+Username: ljrul
+Host Name: DESKTOP-6B2M0LQ/10.0.0.12
 Speed: T1
-Time: 2020-12-15 02:39:34.465641
+Time: 2020-12-15 18:41:20.727335
 
 User Information
-Username: fr0gm
-Host Name: ALIENWARE-AURORA-R7-KYLE/10.0.0.225
+Username: ljrul
+Host Name: DESKTOP-6B2M0LQ/10.0.0.12
 Speed: T1
-Time: 2020-12-15 02:40:48.770635
+Time: 2020-12-15 18:41:54.297301
 
 User Information
-Username: fr0gm
-Host Name: ALIENWARE-AURORA-R7-KYLE/10.0.0.225
+Username: ljrul
+Host Name: DESKTOP-6B2M0LQ/10.0.0.12
 Speed: T1
-Time: 2020-12-15 04:01:06.331771
+Time: 2020-12-15 18:43:44.256508
 
 User Information
-Username: fr0gm
-Host Name: ALIENWARE-AURORA-R7-KYLE/10.0.0.225
+Username: ljrul
+Host Name: DESKTOP-6B2M0LQ/10.0.0.12
 Speed: T1
-Time: 2020-12-15 04:02:17.801665
+Time: 2020-12-15 18:44:38.214264
 
 User Information
-Username: fr0gm
-Host Name: ALIENWARE-AURORA-R7-KYLE/10.0.0.225
+Username: ljrul
+Host Name: DESKTOP-6B2M0LQ/10.0.0.12
 Speed: T1
-Time: 2020-12-15 04:04:23.958670
+Time: 2020-12-15 18:47:21.475680
 
 User Information
-Username: fr0gm
-Host Name: ALIENWARE-AURORA-R7-KYLE/10.0.0.225
+Username: ljrul
+Host Name: DESKTOP-6B2M0LQ/10.0.0.12
 Speed: T1
-Time: 2020-12-15 04:07:15.180425
+Time: 2020-12-15 18:47:31.455801
 
 User Information
-Username: fr0gm
-Host Name: ALIENWARE-AURORA-R7-KYLE/10.0.0.225
+Username: ljrul
+Host Name: DESKTOP-6B2M0LQ/10.0.0.12
 Speed: T1
-Time: 2020-12-15 04:07:35.946725
+Time: 2020-12-15 18:49:15.977712
 
 User Information
-Username: fr0gm
-Host Name: ALIENWARE-AURORA-R7-KYLE/10.0.0.225
+Username: ljrul
+Host Name: DESKTOP-6B2M0LQ/10.0.0.12
 Speed: T1
-Time: 2020-12-15 04:07:56.486885
+Time: 2020-12-15 18:49:40.161710
 
 User Information
-Username: fr0gm
-Host Name: ALIENWARE-AURORA-R7-KYLE/10.0.0.225
+Username: ljrul
+Host Name: DESKTOP-6B2M0LQ/10.0.0.12
 Speed: T1
-Time: 2020-12-15 04:08:39.922898
+Time: 2020-12-15 18:50:39.598612
 
 User Information
-Username: fr0gm
-Host Name: ALIENWARE-AURORA-R7-KYLE/10.0.0.225
+Username: ljrul
+Host Name: DESKTOP-6B2M0LQ/10.0.0.12
 Speed: T1
-Time: 2020-12-15 04:09:52.721077
+Time: 2020-12-15 18:51:58.020543
 
 User Information
-Username: fr0gm
-Host Name: ALIENWARE-AURORA-R7-KYLE/10.0.0.225
+Username: ljrul
+Host Name: DESKTOP-6B2M0LQ/10.0.0.12
 Speed: T1
-Time: 2020-12-15 04:11:12.133855
+Time: 2020-12-15 18:53:24.889264
 
 User Information
-Username: fr0gm
-Host Name: ALIENWARE-AURORA-R7-KYLE/10.0.0.225
+Username: ljrul
+Host Name: DESKTOP-6B2M0LQ/10.0.0.12
 Speed: T1
-Time: 2020-12-15 04:11:45.835782
+Time: 2020-12-15 18:54:01.627719
 
 User Information
-Username: fr0gm
-Host Name: ALIENWARE-AURORA-R7-KYLE/10.0.0.225
+Username: ljrul
+Host Name: DESKTOP-6B2M0LQ/10.0.0.12
 Speed: T1
-Time: 2020-12-15 04:14:09.350472
+Time: 2020-12-15 18:55:57.005317
 
 User Information
-Username: fr0gm
-Host Name: ALIENWARE-AURORA-R7-KYLE/10.0.0.225
+Username: ljrul
+Host Name: DESKTOP-6B2M0LQ/10.0.0.12
 Speed: T1
-Time: 2020-12-15 04:15:07.390106
+Time: 2020-12-15 19:02:19.253153
 
 User Information
-Username: fr0gm
-Host Name: ALIENWARE-AURORA-R7-KYLE/10.0.0.225
+Username: ljrul
+Host Name: DESKTOP-6B2M0LQ/10.0.0.12
 Speed: T1
-Time: 2020-12-15 04:15:41.530223
+Time: 2020-12-15 19:06:08.355886
 
 User Information
-Username: fr0gm
-Host Name: ALIENWARE-AURORA-R7-KYLE/10.0.0.225
+Username: ljrul
+Host Name: DESKTOP-6B2M0LQ/10.0.0.12
 Speed: T1
-Time: 2020-12-15 04:15:49.946104
-
-User Information
-Username: fr0gm
-Host Name: ALIENWARE-AURORA-R7-KYLE/10.0.0.225
-Speed: T1
-Time: 2020-12-15 04:16:50.707182
-
-User Information
-Username: fr0gm
-Host Name: ALIENWARE-AURORA-R7-KYLE/10.0.0.225
-Speed: T1
-Time: 2020-12-15 04:18:42.485545
-
-User Information
-Username: fr0gm
-Host Name: ALIENWARE-AURORA-R7-KYLE/10.0.0.225
-Speed: T1
-Time: 2020-12-15 04:20:59.974573
-
-User Information
-Username: fr0gm
-Host Name: ALIENWARE-AURORA-R7-KYLE/10.0.0.225
-Speed: T1
-Time: 2020-12-15 04:21:46.067404
-
-User Information
-Username: fr0gm
-Host Name: ALIENWARE-AURORA-R7-KYLE/10.0.0.225
-Speed: T1
-Time: 2020-12-15 04:23:21.184332
-
-User Information
-Username: fr0gm
-Host Name: ALIENWARE-AURORA-R7-KYLE/10.0.0.225
-Speed: T1
-Time: 2020-12-15 04:24:22.301240
-
-User Information
-Username: fr0gm
-Host Name: ALIENWARE-AURORA-R7-KYLE/10.0.0.225
-Speed: T1
-Time: 2020-12-15 04:24:44.107812
-
-User Information
-Username: fr0gm
-Host Name: ALIENWARE-AURORA-R7-KYLE/10.0.0.225
-Speed: T1
-Time: 2020-12-15 04:25:57.162043
-
-User Information
-Username: fr0gm
-Host Name: ALIENWARE-AURORA-R7-KYLE/10.0.0.225
-Speed: T1
-Time: 2020-12-15 04:26:04.426843
-
-User Information
-Username: fr0gm
-Host Name: ALIENWARE-AURORA-R7-KYLE/10.0.0.225
-Speed: T1
-Time: 2020-12-15 04:30:59.734466
-
-User Information
-Username: fr0gm
-Host Name: ALIENWARE-AURORA-R7-KYLE/10.0.0.225
-Speed: T1
-Time: 2020-12-15 04:32:01.914889
+Time: 2020-12-15 19:06:29.113429
 

@@ -334,9 +334,3 @@ Host Name: DESKTOP-6B2M0LQ/10.0.0.12
 Speed: T1
 Time: 2020-12-15 19:06:08.355886
 
-User Information
-Username: ljrul
-Host Name: DESKTOP-6B2M0LQ/10.0.0.12
-Speed: T1
-Time: 2020-12-15 19:06:29.113429
-
