@@ -1,6 +1,1 @@
 filler.txt Start of Program Go
-descriptors.txt ljrul DESKTOP-6B2M0LQ/10.0.0.12 T1 48918
-descriptors.txt ljrul DESKTOP-6B2M0LQ/10.0.0.12 T1 11329
-descriptors.txt ljrul DESKTOP-6B2M0LQ/10.0.0.12 T1 43521
-descriptors.txt ljrul DESKTOP-6B2M0LQ/10.0.0.12 T1 41227
-filler.txt ljrul DESKTOP-6B2M0LQ/10.0.0.12 T1 37869
