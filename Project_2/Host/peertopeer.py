@@ -303,6 +303,7 @@ class GUI(QWidget):
 
         # When the user selects 2, disconnect from the central server.
         elif self.commandInput.text() == "2":
+            self.GUIClient.getRidOfDescriptor()
             self.GUIClient.ftp.close()
 
             # Reset the search components.
@@ -322,7 +323,6 @@ class GUI(QWidget):
             self.commandInput.setText("")
 
             # Disables the command and search buttons.
-            self.connectButton.setEnabled(True)
             self.commandButton.setEnabled(False)
             self.commandInput.setEnabled(False)
             self.searchButton.setEnabled(False)
