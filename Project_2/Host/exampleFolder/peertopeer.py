@@ -66,7 +66,6 @@ class GUI(QWidget):
         self.Label2 = QLabel('Port:')
         self.portInput = QLineEdit()
         self.portInput.setText(str(value))
-        self.portInput.setEnabled(False)
 
         # Creates components for the username input components.
         self.Label3 = QLabel('Username:')
@@ -132,6 +131,7 @@ class GUI(QWidget):
         self.commandInput = QLineEdit()
         self.commandButton = QPushButton("Go")
         self.commandText = QPlainTextEdit()
+        self.commandText.setReadOnly(True)
 
         # Adds the individual widgets to subLayout 2.
         sublayout2.addWidget(self.Label6)
@@ -150,7 +150,8 @@ class GUI(QWidget):
         # Set the main layout to appear.
         self.setLayout(self.overallLayout)
 
-        # Disables the command and search components.
+        # Disables certain components of the GUI at launch.
+        self.portInput.setEnabled(False)
         self.commandButton.setEnabled(False)
         self.commandInput.setEnabled(False)
         self.searchButton.setEnabled(False)
@@ -163,7 +164,7 @@ class GUI(QWidget):
 
     # Provides the functions for the connect button.
     def connect_pressed(self):
-        # Enables the search and command inputs.
+        # Enables the search and command components.
         self.searchInput.setEnabled(True)
         self.commandInput.setEnabled(True)
 
@@ -272,8 +273,7 @@ class GUI(QWidget):
                 self.GUIClient.fetchFile("fileDescriptors.txt")
                 portNumber = 0
 
-
-                # Searches file descriptors text file to populate QTable with data.
+                # Searches file descriptors text file to determine if download is successful.
                 with open('fileDescriptors.txt', 'r') as file:
                     for line in file:
                         words = line.split()
@@ -286,8 +286,10 @@ class GUI(QWidget):
                                             portNumber = int(line.split()[4])
                                             isFound = True
                 self.GUIClient.downloadFromOtherPort(portNumber, text)
+
                 try:
-                    self.commandText.insertPlainText("\nDownload successful! \n")
+                    self.commandText.clear()
+                    self.commandText.insertPlainText("Download successful! \n")
                     self.commandText.insertPlainText("\nFor commands, use the corresponding number: \n")
                     self.commandText.insertPlainText("1: Retrieve a File\n")
                     self.commandText.insertPlainText("2: Disconnect from Server\n")
@@ -295,7 +297,8 @@ class GUI(QWidget):
 
                 # If the file does not exist in the directory, the download will be unsuccessful.
                 except:
-                    self.commandText.insertPlainText("\nCould not download file. \n")
+                    self.commandText.clear()
+                    self.commandText.insertPlainText("Could not download file. \n")
                     self.commandText.insertPlainText("\nFor commands, use the corresponding number: \n")
                     self.commandText.insertPlainText("1: Retrieve a File\n")
                     self.commandText.insertPlainText("2: Disconnect from Server\n")
@@ -303,6 +306,7 @@ class GUI(QWidget):
 
         # When the user selects 2, disconnect from the central server.
         elif self.commandInput.text() == "2":
+            self.GUIClient.getRidOfDescriptor()
             self.GUIClient.ftp.close()
 
             # Reset the search components.
@@ -332,11 +336,15 @@ class GUI(QWidget):
 
         # When the user selects 3, close down the entire program.
         elif self.commandInput.text() == "3":
+            self.GUIClient.getRidOfDescriptor()
+            self.GUIClient.ftp.close()
+
             exit(0)
 
         # When the user provides incorrect input, display a warning message
         else:
-            self.commandText.insertPlainText("\nWARNING: Please use one of the following commands. \n")
+            self.commandText.clear()
+            self.commandText.insertPlainText("WARNING: Please use one of the following commands. \n")
             self.commandText.insertPlainText("\nFor commands, use the corresponding number: \n")
             self.commandText.insertPlainText("1: Retrieve a File\n")
             self.commandText.insertPlainText("2: Disconnect from Server\n")

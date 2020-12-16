@@ -18,6 +18,7 @@ class Client:
         self.serverHostname = ''
         self.speed = ''
         self.ftp = FTP('')
+        self.fileUpload = ''
 
     # Accepts parameters inputted from central server with anonymous login.
     def clientConnect(self, hostName, portNumber, username, serverHostname, speed):
@@ -36,13 +37,14 @@ class Client:
 
     # Allows reading and writing files when the command section is active.
     def updateUsersAndFiles(self, fileUpload):
+        self.fileUpload = fileUpload
         filename = "users.txt"
 
         # Allows appending of new users to the users.txt file.
         file = open(filename, 'ab')
         self.ftp.retrbinary('RETR ' + filename, open(filename, 'wb').write)
         file.write(("User Information" + "\n"
-                                         "Username: " + self.username + "\n" +
+                    "Username: " + self.username + "\n" +
                     "Host Name: " + self.hostName + "\n" +
                     "Speed: " + self.speed + "\n" +
                     "Time: " + str(datetime.now()) + "\n\n")
@@ -53,8 +55,8 @@ class Client:
         # Allows appending of new users to the users.txt file.
         file1 = open(fileDescriptors, 'ab')
         self.ftp.retrbinary('RETR ' + fileDescriptors, open(fileDescriptors, 'wb').write)
-        file1.write((fileUpload + " " + self.username + ' ' + self.hostName + ' ' + self.speed + ' ' + str(self.portNumber) + '\n')
-                    .encode())
+        file1.write((fileUpload + " " + self.username + ' ' + self.hostName + ' ' + self.speed + ' ' +
+                     str(self.portNumber) + '\n').encode())
         file1.close()
 
         # Allows file to be opened on the client.
@@ -78,6 +80,7 @@ class Client:
         self.ftp.retrbinary('RETR ' + filename, open(filename, 'wb').write)
         file.close()
 
+    # Downloads the file from another port.
     def downloadFromOtherPort(self, portName, fileName):
         thisFTP = FTP('')
         thisFTP.connect("", portName)
@@ -86,3 +89,21 @@ class Client:
         thisFTP.retrbinary('RETR ' + fileName, open(fileName, 'wb').write)
         file1.close()
         thisFTP.quit()
+
+    # Prevents duplicate descriptors from appearing within the QTable.
+    def getRidOfDescriptor(self):
+        self.fetchFile("fileDescriptors.txt")
+        # Searches file descriptors text file to populate QTable with data.
+        checkFile = open("fileDescriptors.txt", 'r')
+        lines = checkFile.readlines()
+        checkFile.close()
+
+        newFile = open('fileDescriptors.txt', 'w')
+        for line in lines:
+            if self.fileUpload not in line:
+                newFile.write(line)
+        newFile.close()
+
+        file3 = open('fileDescriptors.txt', 'rb+')
+        self.ftp.storbinary('STOR fileDescriptors.txt', file3)
+        file3.close()

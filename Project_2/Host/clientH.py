@@ -44,7 +44,7 @@ class Client:
         file = open(filename, 'ab')
         self.ftp.retrbinary('RETR ' + filename, open(filename, 'wb').write)
         file.write(("User Information" + "\n"
-                                         "Username: " + self.username + "\n" +
+                    "Username: " + self.username + "\n" +
                     "Host Name: " + self.hostName + "\n" +
                     "Speed: " + self.speed + "\n" +
                     "Time: " + str(datetime.now()) + "\n\n")
@@ -55,8 +55,8 @@ class Client:
         # Allows appending of new users to the users.txt file.
         file1 = open(fileDescriptors, 'ab')
         self.ftp.retrbinary('RETR ' + fileDescriptors, open(fileDescriptors, 'wb').write)
-        file1.write((fileUpload + " " + self.username + ' ' + self.hostName + ' ' + self.speed + ' ' + str(self.portNumber) + '\n')
-                    .encode())
+        file1.write((fileUpload + " " + self.username + ' ' + self.hostName + ' ' + self.speed + ' ' +
+                     str(self.portNumber) + '\n').encode())
         file1.close()
 
         # Allows file to be opened on the client.
@@ -80,6 +80,7 @@ class Client:
         self.ftp.retrbinary('RETR ' + filename, open(filename, 'wb').write)
         file.close()
 
+    # Downloads the file from another port.
     def downloadFromOtherPort(self, portName, fileName):
         thisFTP = FTP('')
         thisFTP.connect("", portName)
@@ -89,6 +90,7 @@ class Client:
         file1.close()
         thisFTP.quit()
 
+    # Prevents duplicate descriptors from appearing within the QTable.
     def getRidOfDescriptor(self):
         self.fetchFile("fileDescriptors.txt")
         # Searches file descriptors text file to populate QTable with data.

@@ -1,4 +1,3 @@
-
 # Project 2 - GV-NAP File Sharing System
 # CIS 457 - Data Communications
 # Authors: Kyle Jacobson, Logan Jaglowski, Kade O'Laughlin, Kevin Rufino
@@ -28,4 +27,3 @@ def beginConnect(value):
     server.max_cons = 256
     server.max_cons_per_ip = 5
     server.serve_forever()
-
