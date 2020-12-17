@@ -163,12 +163,12 @@ class GUI(QWidget):
         self.connectButton.clicked.connect(self.connect_pressed)
         self.searchButton.clicked.connect(self.search_pressed)
         self.commandButton.clicked.connect(self.command_pressed)
-        
+
     def closeEvent(self, event):
         self.GUIClient.getRidOfDescriptor()
         self.GUIClient.ftp.close()
         event.accept()
-        
+
     # Provides the functions for the connect button.
     def connect_pressed(self):
         # Enables the search and command components.
@@ -239,6 +239,8 @@ class GUI(QWidget):
 
     # Provides the functions for the search button.
     def search_pressed(self):
+
+        # Resets the search table to default when the user inputs whitespace.
         if self.searchInput.text() == "":
             self.searchTable.setRowCount(1)
             self.searchTable.setItem(0, 0, QTableWidgetItem("Speed"))
@@ -293,6 +295,7 @@ class GUI(QWidget):
                                             portNumber = int(line.split()[4])
                                             isFound = True
 
+                # If the file does exist in the directory, the download will be successful.
                 try:
                     self.GUIClient.downloadFromOtherPort(portNumber, text)
                     self.commandText.clear()

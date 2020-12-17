@@ -164,12 +164,11 @@ class GUI(QWidget):
         self.searchButton.clicked.connect(self.search_pressed)
         self.commandButton.clicked.connect(self.command_pressed)
 
-    
     def closeEvent(self, event):
         self.GUIClient.getRidOfDescriptor()
         self.GUIClient.ftp.close()
         event.accept()
-        
+
     # Provides the functions for the connect button.
     def connect_pressed(self):
         # Enables the search and command components.

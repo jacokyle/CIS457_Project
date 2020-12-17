@@ -43,7 +43,7 @@ class Client:
         # Allows appending of new users to the users.txt file.
         file = open(filename, 'ab')
         self.ftp.retrbinary('RETR ' + filename, open(filename, 'wb').write)
-        file.write(("User Information" + "\n"
+        file.write(("User Information" + "\n" +
                     "Username: " + self.username + "\n" +
                     "Host Name: " + self.hostName + "\n" +
                     "Speed: " + self.speed + "\n" +
