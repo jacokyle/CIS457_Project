@@ -64,3 +64,15 @@ Host Name: ALIENWARE-AURORA-R7-KYLE/10.0.0.225
 Speed: T1
 Time: 2020-12-16 19:10:44.541897
 
+User Information
+Username: Kyle
+Host Name: ALIENWARE-AURORA-R7-KYLE/10.0.0.225
+Speed: T1
+Time: 2020-12-16 19:36:54.973752
+
+User Information
+Username: Kyle
+Host Name: ALIENWARE-AURORA-R7-KYLE/10.0.0.225
+Speed: T1
+Time: 2020-12-16 19:37:53.663953
+
