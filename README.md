@@ -1,6 +1,6 @@
 # CIS457 - Building an FTP Server (Project 1)
 
-This project was created by Kevin Rufino, Kyle Jacobson, Logan Jaglowski and Kade O'Laughlin for Data Communications (CIS 457) during the Fall 2020 semester at Grand Valley State University.
+This project was created by Kyle Jacobson and Logan Jaglowski for Data Communications (CIS 457) during the Fall 2020 semester at Grand Valley State University.
 
 This project was programmed using the Python programming language on JetBrains' PyCharm IDE.
 
@@ -22,7 +22,7 @@ The server program binds to a port and listens for requests from a client. After
 
 # CIS457 - GV-NAP File Sharing System (Project 2)
 
-This project was created by Kevin Rufino, Kyle Jacobson, Logan Jaglowski and Kade O'Laughlin for Data Communications (CIS 457) during the Fall 2020 semester at Grand Valley State University.
+This project was created by Kyle Jacobson and Logan Jaglowski for Data Communications (CIS 457) during the Fall 2020 semester at Grand Valley State University.
 
 This project was programmed using the Python programming language on JetBrains' PyCharm IDE.
 
